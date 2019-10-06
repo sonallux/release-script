@@ -81,4 +81,4 @@ updateVersionInMavenPom(NEXT_VERSION, {cwd: 'subproject2'});
 // Git commit and push
 execSync('git commit -am "Prepare next release [CI SKIP]"');
 
-// execSync('git push --follow-tags');
+execSync('git push --follow-tags');
