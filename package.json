@@ -1,0 +1,15 @@
+{
+  "name": "release-script",
+  "version": "0.0.1-SNAPSHOT",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsone-studios/release-script.git"
+  },
+  "author": "jsone-studios",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jsone-studios/release-script/issues"
+  },
+  "homepage": "https://github.com/jsone-studios/release-script#readme"
+}
