@@ -1,15 +1,41 @@
 #!/usr/bin/env node
 
+//Imports
 const fs = require('fs');
+const path = require('path');
 const realExecSync = require('child_process').execSync;
+
+//Helper functions
+
+function execSync(command, options) {
+  return realExecSync(command, options).toString('utf-8').trim();
+}
+
+function updateVersionInFile(file, version) {
+  fs.writeFileSync(file, version, 'utf-8');
+}
+
+function updateVersionInPackageJson(version, options) {
+  execSync('npm -no-git-tag-version --allow-same-version version ' + version, options);
+}
+
+function updateVersionInMavenPom(version, options) {
+  const mvnWrapper = '.' + path.sep + 'mvnw';
+  execSync(mvnWrapper + ' versions:set -DnewVersion="' + version + '" -DgenerateBackupPoms=false', options)
+}
+
+//Version update
+//Adjust this function to your needs
+function updateVersion(version) {
+  updateVersionInFile('VERSION', version);
+  updateVersionInPackageJson(version);
+  updateVersionInPackageJson(version, {cwd: 'subproject1'});
+  updateVersionInMavenPom(version, {cwd: 'subproject2'});
+}
 
 if (process.argv.length != 3) {
   console.log('No version number specified!');
   process.exit(1);
-}
-
-function execSync(command, options) {
-  return realExecSync(command, options).toString('utf-8').trim();
 }
 
 //Check if git is initialised
@@ -47,23 +73,8 @@ if (gitTags.includes('v' + NEW_VERSION)) {
 
 console.log('Releasing version', NEW_VERSION);
 
-function updateVersionInFile(file, version) {
-  fs.writeFileSync(file, version, 'utf-8');
-}
-
-function updateVersionInPackageJson(version, options) {
-  execSync('npm -no-git-tag-version --allow-same-version version ' + version, options);
-}
-
-function updateVersionInMavenPom(version, options) {
-  execSync('./mvnw versions:set -DnewVersion="' + version + '" -DgenerateBackupPoms=false', options)
-}
-
 // Change version
-updateVersionInFile('VERSION', NEW_VERSION);
-updateVersionInPackageJson(NEW_VERSION);
-updateVersionInPackageJson(NEW_VERSION, {cwd: 'subproject1'});
-updateVersionInMavenPom(NEW_VERSION, {cwd: 'subproject2'});
+updateVersion(NEW_VERSION);
 
 // Git commit and push
 execSync('git commit -am "Release version ' + NEW_VERSION + ' [CI SKIP]"');
@@ -73,10 +84,7 @@ console.log('Finished releasing');
 
 console.log('Update to next version', NEXT_VERSION);
 
-updateVersionInFile('VERSION', NEXT_VERSION);
-updateVersionInPackageJson(NEXT_VERSION);
-updateVersionInPackageJson(NEXT_VERSION, {cwd: 'subproject1'});
-updateVersionInMavenPom(NEXT_VERSION, {cwd: 'subproject2'});
+updateVersion(NEXT_VERSION);
 
 // Git commit and push
 execSync('git commit -am "Prepare next release [CI SKIP]"');
