@@ -33,7 +33,7 @@ function updateVersion(version) {
   updateVersionInMavenPom(version, {cwd: 'subproject2'});
 }
 
-if (process.argv.length != 3) {
+if (process.argv.length !== 3) {
   console.log('No version number specified!');
   process.exit(1);
 }
@@ -46,14 +46,14 @@ if ('true' !== execSync('git rev-parse --is-inside-work-tree')) {
 
 //Check for changed Files
 const changedFiles = execSync('git status --porcelain');
-if (changedFiles || changedFiles != '') {
+if (changedFiles || changedFiles !== '') {
   console.log('You have not commited files:\n', changedFiles);
   process.exit(1);
 }
 
 //Check if we are on branch "master"
 if ('master' !== execSync('git rev-parse --abbrev-ref HEAD')) {
-  console.log('You are not on branch "master"!')
+  console.log('You are not on branch "master"!');
   process.exit(1);
 }
 
