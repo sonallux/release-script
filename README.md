@@ -1,1 +1,1 @@
-# release-script
+# Release script

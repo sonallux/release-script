@@ -11,5 +11,71 @@
   "bugs": {
     "url": "https://github.com/jsone-studios/release-script/issues"
   },
-  "homepage": "https://github.com/jsone-studios/release-script#readme"
+  "homepage": "https://github.com/jsone-studios/release-script#readme",
+  "dependencies": {
+    "ajv": "6.10.2",
+    "ajv-keywords": "3.4.1",
+    "command-line-args": "5.1.1",
+    "command-line-usage": "6.1.0",
+    "semver": "6.3.0",
+    "simple-git": "1.126.0"
+  },
+  "engines": {
+    "node": ">=10.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "12.12.5",
+    "@types/command-line-args": "5.0.0",
+    "@types/command-line-usage": "5.0.1",
+    "@types/jest": "24.0.23",
+    "@types/mkdirp": "0.5.2",
+    "@types/rimraf": "2.0.3",
+    "@types/semver": "6.2.0",
+    "@typescript-eslint/parser": "2.6.0",
+    "@typescript-eslint/eslint-plugin": "2.6.0",
+    "eslint": "6.6.0",
+    "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-json": "2.0.1",
+    "eslint-plugin-node": "10.0.0",
+    "husky": "3.0.9",
+    "jest": "24.9.0",
+    "json-schema-to-typescript": "7.1.0",
+    "lint-staged": "9.4.2",
+    "mkdirp": "0.5.1",
+    "rimraf": "3.0.0",
+    "ts-jest": "24.2.0",
+    "typescript": "3.6.4",
+    "webpack": "4.41.2",
+    "webpack-cli": "3.3.10"
+  },
+  "scripts": {
+    "lint": "npm run code-lint && node scripts/compile-to-definitions",
+    "lint-fix": "node scripts/compile-to-definitions --write",
+    "code-lint": "npm run eslint -- . --ext .js,.ts,.json --cache",
+    "prebuild": "npm run lint-fix",
+    "build": "npm run tsc",
+    "watch": "npm run tsc -- --watch",
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "webpack:prod": "npm run webpack -- --mode=production",
+    "webpack:dev": "npm run webpack -- --mode=development",
+    "eslint": "node --max_old_space_size=4096 node_modules/eslint/bin/eslint.js",
+    "tsc": "node --max_old_space_size=4096 node_modules/typescript/bin/tsc",
+    "webpack": "node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js"
+  },
+  "files": [
+    "bin/",
+    "declarations/",
+    "lib/"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "{src|scripts|schemas}/**/*.{js|ts|json}": [
+      "eslint --cache"
+    ]
+  }
 }

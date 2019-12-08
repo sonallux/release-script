@@ -1,0 +1,93 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "preconditions": {
+      "description": "Precondition checkers",
+      "type": "array",
+      "items": {
+        "description": "Precondition checker of type object or instanceof Function",
+        "anyOf": [
+          {
+            "$ref": "#/definitions/PreconditionInstance"
+          },
+          {
+            "$ref": "#/definitions/PreconditionFunction"
+          }
+        ]
+      }
+    },
+    "shapshot": {
+      "$ref": "#/definitions/BooleanOrString"
+    },
+    "push": {
+      "type": "boolean"
+    },
+    "tag": {
+      "$ref": "#/definitions/BooleanOrString"
+    },
+    "plugins": {
+      "description": "Plugins for the version updater",
+      "type": "array",
+      "items": {
+        "description": "Plugin of type object or instanceof Function",
+        "anyOf": [
+          {
+            "$ref": "#/definitions/PluginInstance"
+          },
+          {
+            "$ref": "#/definitions/PluginFunction"
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "PluginFunction": {
+      "description": "Function acting as plugin",
+      "instanceof": "Function",
+      "tsType": "(context: import(\"../src/release-context\").ReleaseContext) => Promise<boolean> | boolean"
+    },
+    "PluginInstance": {
+      "description": "Plugin instance",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "apply": {
+          "$ref": "#/definitions/PluginFunction"
+        }
+      },
+      "required": ["apply"]
+    },
+    "PreconditionFunction": {
+      "description": "Function acting as precondition checker",
+      "instanceof": "Function",
+      "tsType": "(context: import(\"../src/release-context\").ReleaseContext) => Promise<boolean> | [boolean, string?]"
+    },
+    "PreconditionInstance": {
+      "description": "Precondition checker instance",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "precondition": {
+          "$ref": "#/definitions/PreconditionFunction"
+        },
+        "name": {
+          "description": "Name of this precondition",
+          "type": "string"
+        }
+      },
+      "required": ["precondition", "name"]
+    },
+    "BooleanOrString": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    }
+  }
+}
