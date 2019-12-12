@@ -36,7 +36,7 @@ export class ReleaseContext {
         const id = this.config.shapshot === true || this.config.shapshot === undefined
             ? undefined
             : this.config.shapshot;
-        const nextVersion = this.version.inc('prerelease', id);
+        const nextVersion = new SemVer(this.version.version).inc('prerelease', id);
         return new ReleaseContext(this.git, nextVersion, this.config);
     }
 }

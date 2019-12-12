@@ -16,20 +16,19 @@ export class TestGitRepo {
 
     constructor(name: string) {
         this._directory = path.resolve(DEFAULT_REPO_FOLDER, name);
-        console.log(`Creating test git repo in ${this._directory}`);
+        //console.log(`Created test git repo ${name} in ${this._directory}`);
         this.setUpDirectory();
         const simpleGit = simplegit(this._directory);
         simpleGit.init();
         simpleGit.addConfig('user.name', 'Test Executor');
         simpleGit.addConfig('user.email', 'test@test.com');
         this._git = new Git(simpleGit);
-        console.log(`Created test git repo: ${name}`);
     }
 
     private setUpDirectory(): void {
         if (fs.existsSync(this._directory)) {
             for (const file of fs.readdirSync(this._directory)) {
-                console.log(`Deleting: ${path.resolve(this._directory, file)}`);
+                //console.log(`Deleting: ${path.resolve(this._directory, file)}`);
                 rimraf.sync(path.resolve(this._directory, file));
             }
         }

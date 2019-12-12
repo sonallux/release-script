@@ -10,7 +10,7 @@ const ajv = new Ajv({
 });
 
 ajvKeywords(ajv, [
-    'instanceof',
+    'typeof',
 ]);
 
 export function validate(releaseConfig: ReleaseConfigOptions): void {
@@ -24,8 +24,7 @@ export function validate(releaseConfig: ReleaseConfigOptions): void {
     for (const error of compiledSchema.errors) {
         errors.push(`- ReleaseConfig${error.dataPath} ${error.message}`);
     }
-    console.log('Invalid configuration object.'
+    throw Error('Invalid configuration object. '
         + 'ReleaseScript has been initialised using a configuration object that does not match the API schema.\n'
-        + `${errors.join('\n')}\n`);
-    process.exit(1);
+        + `${errors.join('\n')}\n`)
 }

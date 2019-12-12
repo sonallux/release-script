@@ -45,7 +45,7 @@
   "definitions": {
     "PluginFunction": {
       "description": "Function acting as plugin",
-      "instanceof": "Function",
+      "typeof": "function",
       "tsType": "(context: import(\"../src/release-context\").ReleaseContext) => Promise<boolean> | boolean"
     },
     "PluginInstance": {
@@ -61,7 +61,7 @@
     },
     "PreconditionFunction": {
       "description": "Function acting as precondition checker",
-      "instanceof": "Function",
+      "typeof": "function",
       "tsType": "(context: import(\"../src/release-context\").ReleaseContext) => Promise<boolean> | [boolean, string?]"
     },
     "PreconditionInstance": {

@@ -3,7 +3,7 @@ import {PreconditionFunction, PreconditionInstance} from '../declarations/Releas
 import {ReleaseContext} from './release-context';
 
 function unpackPrecondition(precondition: PreconditionInstance | PreconditionFunction): [string, PreconditionFunction] {
-    if (precondition instanceof Function) {
+    if (typeof precondition === 'function') {
         return [precondition.name, precondition];
     }
     else {
@@ -34,7 +34,7 @@ export async function checkPreconditions(context: ReleaseContext): Promise<void>
         else {
             const [valid, errorMessage] = preconditionResult;
             if (!valid) {
-                return Promise.reject(new Error(errorMessage));
+                return Promise.reject(new Error(errorMessage ? errorMessage : `Precondition '${name}' failed`));
             }
         }
     }
