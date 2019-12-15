@@ -3,7 +3,7 @@ import {PluginFunction, PluginInstance} from '../declarations/ReleaseConfigOptio
 import {ReleaseContext} from './release-context';
 
 function unpackPluginFunc(plugin: PluginInstance|PluginFunction): [string, PluginFunction] {
-    if (plugin instanceof Function) {
+    if (typeof plugin === 'function') {
         return [plugin.name, plugin];
     }
     else {
@@ -28,7 +28,7 @@ export async function executePlugins(context: ReleaseContext): Promise<void> {
                 }
             }
             catch (err) {
-                return Promise.reject(err);
+                return Promise.reject(err instanceof Error ? err : new Error(err));
             }
         }
         else {

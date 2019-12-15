@@ -23,7 +23,7 @@ async function executeReleaseScriptSuccess(preconditions: (PreconditionInstance 
     });
 
     await releaseScript.release(newVersion, repo.directory);
-    expect(await repo.git.tags()).toContain('v1.0.0');
+    expect(await repo.git.tags()).toContain(`v${newVersion}`);
     return;
 }
 
@@ -46,7 +46,31 @@ async function executeReleaseScriptFailure(preconditions: (PreconditionInstance 
 
 describe('PreconditionObject', () => {
     it('should be called', async () => {
+        let preconditionCalledCount = 0;
+        const preconditionFunc = (context: ReleaseContext): [boolean] => {
+            preconditionCalledCount++;
+            expect(context.version.version).toBe('1.0.0');
+            return [true];
+        };
+
+        await executeReleaseScriptSuccess([{name: 'Test', precondition: preconditionFunc}] , '1.0.0');
+        expect(preconditionCalledCount).toBe(1);
+        return null;
+    });
+
+    it('should be called', async () => {
         const preconditionMock = jest.fn<[boolean], [ReleaseContext]>(() => [true]);
+
+        await executeReleaseScriptSuccess([{name: 'Test', precondition: preconditionMock}], '1.0.0');
+
+        expect(preconditionMock).toHaveBeenCalledTimes(1);
+        expect(preconditionMock.mock.calls[0][0].version.version).toBe('1.0.0');
+
+        return null;
+    });
+
+    it('should be called and handle returned promise', async () => {
+        const preconditionMock = jest.fn<Promise<boolean>, [ReleaseContext]>(() => Promise.resolve(true));
 
         await executeReleaseScriptSuccess([{name: 'Test', precondition: preconditionMock}], '1.0.0');
 
@@ -58,6 +82,18 @@ describe('PreconditionObject', () => {
 
     it('should fail', async () => {
         const preconditionMock = jest.fn<[boolean, string], [ReleaseContext]>(() => [false, 'Test error']);
+
+        const error = await executeReleaseScriptFailure([{name: 'Test', precondition: preconditionMock}], '1.0.0');
+        expect(error.message).toBe('Test error');
+
+        expect(preconditionMock).toHaveBeenCalledTimes(1);
+        expect(preconditionMock.mock.calls[0][0].version.version).toBe('1.0.0');
+
+        return null;
+    });
+
+    it('should fail and handle returned promise', async () => {
+        const preconditionMock = jest.fn<Promise<boolean>, [ReleaseContext]>(() => Promise.reject('Test error'));
 
         const error = await executeReleaseScriptFailure([{name: 'Test', precondition: preconditionMock}], '1.0.0');
         expect(error.message).toBe('Test error');
@@ -100,7 +136,31 @@ describe('PreconditionObject', () => {
 
 describe('PreconditionFunction', () => {
     it('should be called', async () => {
+        let preconditionCalledCount = 0;
+        const preconditionFunc = (context: ReleaseContext): [boolean] => {
+            preconditionCalledCount++;
+            expect(context.version.version).toBe('1.0.0');
+            return [true];
+        };
+
+        await executeReleaseScriptSuccess([preconditionFunc], '1.0.0');
+        expect(preconditionCalledCount).toBe(1);
+        return null;
+    });
+
+    it('should be called', async () => {
         const preconditionMock = jest.fn<[boolean], [ReleaseContext]>(() => [true]);
+
+        await executeReleaseScriptSuccess([preconditionMock], '1.0.0');
+
+        expect(preconditionMock).toHaveBeenCalledTimes(1);
+        expect(preconditionMock.mock.calls[0][0].version.version).toBe('1.0.0');
+
+        return null;
+    });
+
+    it('should be called and handle returned Promise', async () => {
+        const preconditionMock = jest.fn<Promise<boolean>, [ReleaseContext]>(() => Promise.resolve(true));
 
         await executeReleaseScriptSuccess([preconditionMock], '1.0.0');
 
@@ -112,6 +172,18 @@ describe('PreconditionFunction', () => {
 
     it('should fail', async () => {
         const preconditionMock = jest.fn<[boolean, string], [ReleaseContext]>(() => [false, 'Test error']);
+
+        const error = await executeReleaseScriptFailure([preconditionMock], '1.0.0');
+        expect(error.message).toBe('Test error');
+
+        expect(preconditionMock).toHaveBeenCalledTimes(1);
+        expect(preconditionMock.mock.calls[0][0].version.version).toBe('1.0.0');
+
+        return null;
+    });
+
+    it('should fail and handle returned Promise', async () => {
+        const preconditionMock = jest.fn<Promise<boolean>, [ReleaseContext]>(() => Promise.reject('Test error'));
 
         const error = await executeReleaseScriptFailure([preconditionMock], '1.0.0');
         expect(error.message).toBe('Test error');
@@ -165,4 +237,4 @@ describe('Mixed Function and Instance', () => {
         expect(preconditionMock2.mock.calls[0][0].version.version).toBe('1.0.0');
         return null;
     });
-})
+});

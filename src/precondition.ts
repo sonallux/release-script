@@ -28,7 +28,7 @@ export async function checkPreconditions(context: ReleaseContext): Promise<void>
                 }
             }
             catch (err) {
-                return Promise.reject(err);
+                return Promise.reject(err instanceof Error ? err : new Error(err));
             }
         }
         else {
