@@ -36,12 +36,12 @@ async function executeReleaseScriptFailure(preconditions: (PreconditionInstance 
 
     try {
         await releaseScript.release(newVersion, repo.directory);
-        throw new Error('Release Script should have thrown error');
     }
     catch (error) {
         expect((await repo.git.tags()).length).toBe(0);
         return error;
     }
+    throw new Error('Release Script should have thrown error');
 }
 
 describe('PreconditionObject', () => {

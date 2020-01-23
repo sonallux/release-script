@@ -7,6 +7,7 @@ import commandLineUsage from 'command-line-usage';
 import {ReleaseConfigOptions} from '../declarations/ReleaseConfigOptions'
 
 import {ReleaseScript} from './release-script';
+import {requireFunc} from './webpack-require';
 
 const DEFAULT_RELEASE_CONFIG_FILE = 'release.config.js';
 
@@ -57,8 +58,7 @@ function getReleaseConfig(userReleaseConfigFile = DEFAULT_RELEASE_CONFIG_FILE): 
         return undefined;
     }
 
-    //TODO: webpack removes this dynamic require statement!
-    return require(configFile.trim()) as ReleaseConfigOptions;
+    return requireFunc(configFile.trim()) as ReleaseConfigOptions;
 }
 
 function main(): void {
@@ -77,7 +77,8 @@ function main(): void {
         }
 
         const releaseScript = new ReleaseScript(releaseConfig);
-        releaseScript.release(options.release, '.');
+        releaseScript.release(options.release, '.')
+            .catch(error => console.log(error));
     }
 }
 

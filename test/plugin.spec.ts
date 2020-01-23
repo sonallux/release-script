@@ -15,8 +15,8 @@ beforeEach(() => {
     return repo.git.addAndCommit('Initial commit');
 });
 
-async function executeReleaseScriptSuccess(plugins: (PluginInstance | PluginFunction)[],
-    newVersion: string): Promise<void> {
+async function executeReleaseScriptSuccess(plugins: (PluginInstance | PluginFunction)[],newVersion: string):
+    Promise<void> {
     const releaseScript = new ReleaseScript({
         plugins,
         push: false,
@@ -27,8 +27,8 @@ async function executeReleaseScriptSuccess(plugins: (PluginInstance | PluginFunc
     return;
 }
 
-async function executeReleaseScriptFailure(plugins: (PluginInstance | PluginFunction)[],
-    newVersion: string): Promise<Error> {
+async function executeReleaseScriptFailure(plugins: (PluginInstance | PluginFunction)[], newVersion: string):
+    Promise<Error> {
     const releaseScript = new ReleaseScript({
         plugins,
         push: false,
@@ -36,12 +36,12 @@ async function executeReleaseScriptFailure(plugins: (PluginInstance | PluginFunc
 
     try {
         await releaseScript.release(newVersion, repo.directory);
-        throw new Error('Release Script should have thrown error');
     }
     catch (error) {
         expect((await repo.git.tags()).length).toBe(0);
         return error;
     }
+    throw new Error('Release Script should have thrown error');
 }
 
 describe('PluginObject', () => {
