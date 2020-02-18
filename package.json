@@ -12,6 +12,10 @@
     "url": "https://github.com/jsone-studios/release-script/issues"
   },
   "homepage": "https://github.com/jsone-studios/release-script#readme",
+  "main": "dist/release-script.js",
+  "bin": {
+    "release-script": "./dist/bin/release-script-cli.js"
+  },
   "dependencies": {
     "ajv": "6.10.2",
     "ajv-keywords": "3.4.1",
@@ -24,6 +28,10 @@
     "node": ">=10.8.0"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "11.0.2",
+    "@rollup/plugin-json": "4.0.2",
+    "@rollup/plugin-node-resolve": "7.1.1",
+    "@rollup/plugin-typescript": "3.0.0",
     "@types/node": "12.12.5",
     "@types/command-line-args": "5.0.0",
     "@types/command-line-usage": "5.0.1",
@@ -43,30 +51,25 @@
     "lint-staged": "9.4.2",
     "mkdirp": "0.5.1",
     "rimraf": "3.0.0",
+    "rollup": "1.31.1",
     "ts-jest": "24.2.0",
-    "typescript": "3.6.4",
-    "webpack": "4.41.2",
-    "webpack-cli": "3.3.10"
+    "tslib": "1.10.0",
+    "typescript": "3.6.4"
   },
   "scripts": {
     "lint": "npm run code-lint && node scripts/compile-to-definitions",
     "lint-fix": "node scripts/compile-to-definitions --write",
     "code-lint": "npm run eslint -- . --ext .js,.ts,.json --cache",
     "prebuild": "npm run lint-fix",
-    "build": "npm run tsc",
-    "watch": "npm run tsc -- --watch",
+    "build": "npm run rollup -- -c",
+    "watch": "npm run rollup -- -c --watch",
     "test": "jest",
     "coverage": "jest --coverage",
-    "webpack:prod": "npm run webpack -- --mode=production",
-    "webpack:dev": "npm run webpack -- --mode=development",
     "eslint": "node --max_old_space_size=4096 node_modules/eslint/bin/eslint.js",
-    "tsc": "node --max_old_space_size=4096 node_modules/typescript/bin/tsc",
-    "webpack": "node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js"
+    "rollup": "node --max_old_space_size=4096 node_modules/rollup/dist/bin/rollup"
   },
   "files": [
-    "bin/",
-    "declarations/",
-    "lib/"
+    "dist/"
   ],
   "husky": {
     "hooks": {

@@ -2,7 +2,6 @@ import fs = require('fs');
 import path = require('path');
 
 import {ReleaseScript} from '../src/release-script';
-import {ReleaseContext} from '../src/release-context';
 
 import {TestGitRepo} from './test-git-repo';
 

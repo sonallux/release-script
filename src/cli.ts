@@ -7,7 +7,6 @@ import commandLineUsage from 'command-line-usage';
 import {ReleaseConfigOptions} from '../declarations/ReleaseConfigOptions'
 
 import {ReleaseScript} from './release-script';
-import {requireFunc} from './webpack-require';
 
 const DEFAULT_RELEASE_CONFIG_FILE = 'release.config.js';
 
@@ -58,7 +57,7 @@ function getReleaseConfig(userReleaseConfigFile = DEFAULT_RELEASE_CONFIG_FILE): 
         return undefined;
     }
 
-    return requireFunc(configFile.trim()) as ReleaseConfigOptions;
+    return require(configFile.trim()) as ReleaseConfigOptions;
 }
 
 function main(): void {

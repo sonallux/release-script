@@ -1,16 +1,16 @@
-import simplegit = require('simple-git/promise');
-import {CommitSummary, SimpleGit, StatusResult} from 'simple-git/promise';
+// eslint-disable-next-line import/default
+import simplegit from 'simple-git/promise';
 import {DefaultLogFields} from 'simple-git/typings/response';
 
 export class Git {
 
-    constructor(private git: SimpleGit) {}
+    constructor(private git: simplegit.SimpleGit) {}
 
     static openRepo(path: string): Git {
         return new Git(simplegit(path));
     }
 
-    status(): Promise<StatusResult> {
+    status(): Promise<simplegit.StatusResult> {
         return this.git.status();
     }
 
@@ -34,7 +34,7 @@ export class Git {
         }
     }
 
-    commit(message: string, files?: string|string[]): Promise<CommitSummary> {
+    commit(message: string, files?: string|string[]): Promise<simplegit.CommitSummary> {
         return this.git.commit(message, files);
     }
 
@@ -54,7 +54,7 @@ export class Git {
         return this.git.push();
     }
 
-    get simpleGit(): SimpleGit {
+    get simpleGit(): simplegit.SimpleGit {
         return this.git;
     }
 }

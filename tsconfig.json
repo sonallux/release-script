@@ -1,13 +1,18 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2016",
-    "outDir": "./lib/",
-    "strict": true,
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+		"lib": ["es2017"],
+		"module": "es6",
+    "moduleResolution": "node",
+		"noEmitOnError": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"pretty": true,
     "resolveJsonModule": true,
-    "declaration": false,
-    "lib": ["es2017"]
+		"skipLibCheck": true,
+		"strict": true,
+		"target": "es2016"
   },
   "include": [
     "src/**/*",
