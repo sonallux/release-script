@@ -14,6 +14,10 @@ export class Git {
         return this.git.status();
     }
 
+    revParse(options?: string[]): Promise<string> {
+        return this.git.revparse(options);
+    }
+
     async tags(): Promise<string[]> {
         const tags = await this.git.tags();
         return tags.all;
