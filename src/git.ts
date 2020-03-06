@@ -18,6 +18,15 @@ export class Git {
         return this.git.revparse(options);
     }
 
+    async getCurrentBranchName(): Promise<string> {
+        try {
+            return await this.revParse(['--abbrev-ref', 'HEAD']);
+        }
+        catch (error) {
+            throw new Error('Failed to get current git branch name');
+        }
+    }
+
     async tags(): Promise<string[]> {
         const tags = await this.git.tags();
         return tags.all;

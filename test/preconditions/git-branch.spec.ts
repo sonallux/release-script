@@ -13,11 +13,11 @@ beforeEach(() => {
     return repo.git.addAndCommit('Initial commit');
 });
 
-describe('GitBranch', () => {
+describe('GitBranch with string', () => {
     it('should work on correct branch', async () => {
         const releaseScript = new ReleaseScript({
             preconditions: [new GitBranch('master')],
-            push: false
+            push: false,
         })
 
         await releaseScript.release('1.0.0', repo.directory);
@@ -28,7 +28,7 @@ describe('GitBranch', () => {
     it('should not work on wrong branch', async () => {
         const releaseScript = new ReleaseScript({
             preconditions: [new GitBranch('test')],
-            push: false
+            push: false,
         })
 
         try {
@@ -36,7 +36,39 @@ describe('GitBranch', () => {
         }
         catch (error) {
             expect((await repo.git.tags()).length).toBe(0);
-            expect(error.message).toBe('Expected branch "test" but got "refs/heads/master"!');
+            expect(error.message).toBe('Expected branch "test" but got "master"!');
+            return null;
+        }
+        throw new Error('Release Script should have thrown error');
+    });
+});
+
+describe('GitBranch with RegExp', () => {
+    it('should work on correct branch', async () => {
+        const releaseScript = new ReleaseScript({
+            preconditions: [new GitBranch(/^v[0-9]+\.[0-9]+$/)],
+            push: false,
+        })
+
+        await repo.git.simpleGit.checkout(['-b', 'v1.0']);
+
+        await releaseScript.release('1.0.0', repo.directory);
+        expect(await repo.git.tags()).toContain('v1.0.0');
+        return null;
+    });
+
+    it('should not work on wrong branch', async () => {
+        const releaseScript = new ReleaseScript({
+            preconditions: [new GitBranch(/^v[0-9]+\.[0-9]+$/)],
+            push: false,
+        })
+
+        try {
+            await releaseScript.release('1.0.0', repo.directory);
+        }
+        catch (error) {
+            expect((await repo.git.tags()).length).toBe(0);
+            expect(error.message).toBe('Current branch "master" does not match pattern "/^v[0-9]+\\.[0-9]+$/"!');
             return null;
         }
         throw new Error('Release Script should have thrown error');
