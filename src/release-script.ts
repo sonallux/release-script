@@ -10,19 +10,10 @@ import {checkPreconditions} from './precondition';
 import {ReleaseContext} from './release-context';
 import {executePlugins} from './plugin';
 
-async function isWorkingTreeClean(context: ReleaseContext): Promise<boolean> {
-    const status = await context.git.status();
-    return Promise.resolve(status.isClean());
-}
-
 function addDefaultOptions(releaseConfig: ReleaseConfigOptions): void {
     if (!releaseConfig.preconditions) {
         releaseConfig.preconditions = [];
     }
-    releaseConfig.preconditions.unshift({
-        name: 'Clean working tree',
-        precondition: isWorkingTreeClean,
-    });
 
     if (!releaseConfig.tag || releaseConfig.tag === true) {
         releaseConfig.tag = 'v';
