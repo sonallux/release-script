@@ -17,12 +17,12 @@ async function isWorkingTreeClean(context: ReleaseContext): Promise<boolean> {
 
 function addDefaultOptions(releaseConfig: ReleaseConfigOptions): void {
     if (!releaseConfig.preconditions) {
-        releaseConfig.preconditions = []
+        releaseConfig.preconditions = [];
     }
     releaseConfig.preconditions.unshift({
         name: 'Clean working tree',
         precondition: isWorkingTreeClean,
-    })
+    });
 
     if (!releaseConfig.tag || releaseConfig.tag === true) {
         releaseConfig.tag = 'v';

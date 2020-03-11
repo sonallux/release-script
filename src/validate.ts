@@ -26,5 +26,5 @@ export function validate(releaseConfig: ReleaseConfigOptions): void {
     }
     throw Error('Invalid configuration object. '
         + 'ReleaseScript has been initialised using a configuration object that does not match the API schema.\n'
-        + `${errors.join('\n')}\n`)
+        + `${errors.join('\n')}\n`);
 }

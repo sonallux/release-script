@@ -55,9 +55,13 @@
       "properties": {
         "apply": {
           "$ref": "#/definitions/PluginFunction"
+        },
+        "name": {
+          "description": "Name of this plugin",
+          "type": "string"
         }
       },
-      "required": ["apply"]
+      "required": ["apply", "name"]
     },
     "PreconditionFunction": {
       "description": "Function acting as precondition checker",

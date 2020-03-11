@@ -36,6 +36,7 @@ module.exports =  {
         "object-shorthand": "error",
         "no-useless-rename": "error",
         "prefer-template": "error",
+        "semi": "error",
     },
     overrides: [
         {

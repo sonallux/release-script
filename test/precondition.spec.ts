@@ -10,7 +10,7 @@ import {TestGitRepo} from './test-git-repo';
 let repo: TestGitRepo;
 
 beforeEach(() => {
-    repo = new TestGitRepo('TestPreconditionRepo')
+    repo = new TestGitRepo('TestPreconditionRepo');
     fs.writeFileSync(path.resolve(repo.directory, 'test.txt'), 'This is a test file!');
     return repo.git.addAndCommit('Initial commit');
 });

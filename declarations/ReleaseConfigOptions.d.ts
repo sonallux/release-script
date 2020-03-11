@@ -61,5 +61,9 @@ export interface PreconditionInstance {
  */
 export interface PluginInstance {
     apply: PluginFunction;
+    /**
+     * Name of this plugin
+     */
+    name: string;
     [k: string]: any;
 }

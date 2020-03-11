@@ -1,76 +1,59 @@
 import fs = require('fs');
 import path = require('path');
 
-import {ReleaseScript} from '../../src/release-script';
 import {GitBranch} from '../../src/preconditions/git-branch';
 import {TestGitRepo} from '../test-git-repo';
 
 let repo: TestGitRepo;
 
+// eslint-disable-next-line
+const context: any = {};
+
 beforeEach(() => {
-    repo = new TestGitRepo('TestGitBranchRepo')
+    repo = new TestGitRepo('TestGitBranchRepo');
+    context.git = repo.git;
     fs.writeFileSync(path.resolve(repo.directory, 'test.txt'), 'This is a test file!');
     return repo.git.addAndCommit('Initial commit');
 });
 
 describe('GitBranch with string', () => {
-    it('should work on correct branch', async () => {
-        const releaseScript = new ReleaseScript({
-            preconditions: [new GitBranch('master')],
-            push: false,
-        })
-
-        await releaseScript.release('1.0.0', repo.directory);
-        expect(await repo.git.tags()).toContain('v1.0.0');
-        return null;
+    it('should work on correct branch', () => {
+        const precondition = new GitBranch('master');
+        return expect(precondition.precondition(context)).resolves.toBe(true);
     });
 
     it('should not work on wrong branch', async () => {
-        const releaseScript = new ReleaseScript({
-            preconditions: [new GitBranch('test')],
-            push: false,
-        })
+        const precondition = new GitBranch('test');
 
         try {
-            await releaseScript.release('1.0.0', repo.directory);
+            await precondition.precondition(context);
         }
         catch (error) {
-            expect((await repo.git.tags()).length).toBe(0);
             expect(error.message).toBe('Expected branch "test" but got "master"!');
             return null;
         }
-        throw new Error('Release Script should have thrown error');
+        throw new Error('Precondition should have thrown error');
     });
 });
 
 describe('GitBranch with RegExp', () => {
     it('should work on correct branch', async () => {
-        const releaseScript = new ReleaseScript({
-            preconditions: [new GitBranch(/^v[0-9]+\.[0-9]+$/)],
-            push: false,
-        })
-
         await repo.git.simpleGit.checkout(['-b', 'v1.0']);
 
-        await releaseScript.release('1.0.0', repo.directory);
-        expect(await repo.git.tags()).toContain('v1.0.0');
-        return null;
+        const precondition = new GitBranch(/^v[0-9]+\.[0-9]+$/);
+        return expect(precondition.precondition(context)).resolves.toBe(true);
     });
 
     it('should not work on wrong branch', async () => {
-        const releaseScript = new ReleaseScript({
-            preconditions: [new GitBranch(/^v[0-9]+\.[0-9]+$/)],
-            push: false,
-        })
+        const precondition = new GitBranch(/^v[0-9]+\.[0-9]+$/);
 
         try {
-            await releaseScript.release('1.0.0', repo.directory);
+            await precondition.precondition(context);
         }
         catch (error) {
-            expect((await repo.git.tags()).length).toBe(0);
             expect(error.message).toBe('Current branch "master" does not match pattern "/^v[0-9]+\\.[0-9]+$/"!');
             return null;
         }
-        throw new Error('Release Script should have thrown error');
+        throw new Error('Precondition should have thrown error');
     });
 });

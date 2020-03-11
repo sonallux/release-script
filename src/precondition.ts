@@ -7,7 +7,7 @@ function unpackPrecondition(precondition: PreconditionInstance | PreconditionFun
         return [precondition.name, precondition];
     }
     else {
-        return [precondition.name, precondition.precondition]
+        return [precondition.name, precondition.precondition];
     }
 }
 

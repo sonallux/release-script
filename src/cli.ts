@@ -4,7 +4,7 @@ import path from 'path';
 import commandLineArgs from 'command-line-args';
 import commandLineUsage from 'command-line-usage';
 
-import {ReleaseConfigOptions} from '../declarations/ReleaseConfigOptions'
+import {ReleaseConfigOptions} from '../declarations/ReleaseConfigOptions';
 
 import {ReleaseScript} from './release-script';
 
