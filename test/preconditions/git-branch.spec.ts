@@ -1,7 +1,7 @@
 import fs = require('fs');
 import path = require('path');
 
-import {GitBranch} from '../../src/preconditions/git-branch';
+import {GitBranch} from '../../src/preconditions';
 import {TestGitRepo} from '../test-git-repo';
 
 let repo: TestGitRepo;
@@ -10,7 +10,7 @@ let repo: TestGitRepo;
 const context: any = {};
 
 beforeEach(() => {
-    repo = new TestGitRepo('TestGitBranchRepo');
+    repo = new TestGitRepo('TestPreconditionGitBranch');
     context.git = repo.git;
     fs.writeFileSync(path.resolve(repo.directory, 'test.txt'), 'This is a test file!');
     return repo.git.addAndCommit('Initial commit');

@@ -10,20 +10,9 @@ import {checkPreconditions} from './precondition';
 import {ReleaseContext} from './release-context';
 import {executePlugins} from './plugin';
 
-function addDefaultOptions(releaseConfig: ReleaseConfigOptions): void {
-    if (!releaseConfig.preconditions) {
-        releaseConfig.preconditions = [];
-    }
-
-    if (!releaseConfig.tag || releaseConfig.tag === true) {
-        releaseConfig.tag = 'v';
-    }
-}
-
 export class ReleaseScript {
     constructor(private releaseConfig: ReleaseConfigOptions = {}) {
         validate(releaseConfig);
-        addDefaultOptions(releaseConfig);
     }
 
     public async release(newVersionString: string, directory = '.'): Promise<void> {

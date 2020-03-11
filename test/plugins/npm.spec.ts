@@ -3,7 +3,7 @@ import {readFileSync} from 'fs';
 
 import semver from 'semver';
 
-import {NpmPackage} from '../../src/plugins/npm';
+import {NpmPackage} from '../../src/plugins';
 import {createTestDirectory} from '../test-git-repo';
 
 // eslint-disable-next-line
@@ -21,7 +21,7 @@ describe('Plugin NpmPackage', () => {
 
         const plugin = new NpmPackage({cwd: testDir});
         context.version = semver.parse('1.0.1');
-        await plugin.apply(context);
+        expect(await plugin.apply(context)).toBe(true);
 
         const packageJson = JSON.parse(readFileSync(`${testDir}/package.json`).toString('utf-8'));
         expect(packageJson.version).toEqual('1.0.1');
@@ -34,7 +34,7 @@ describe('Plugin NpmPackage', () => {
 
         const plugin = new NpmPackage({cwd: testDir});
         context.version = semver.parse('1.0.0');
-        await plugin.apply(context);
+        expect(await plugin.apply(context)).toBe(true);
 
         const packageJson = JSON.parse(readFileSync(`${testDir}/package.json`).toString('utf-8'));
         expect(packageJson.version).toEqual('1.0.0');

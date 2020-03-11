@@ -30,12 +30,12 @@ export class ReleaseContext {
     }
 
     getNextContext(): ReleaseContext | null {
-        if (this.config.shapshot === false) {
+        if (this.config.snapshot === false) {
             return null;
         }
-        const id = this.config.shapshot === true || this.config.shapshot === undefined
+        const id = this.config.snapshot === true || this.config.snapshot === undefined
             ? undefined
-            : this.config.shapshot;
+            : this.config.snapshot;
         const nextVersion = new SemVer(this.version.version).inc('prerelease', id);
         return new ReleaseContext(this.git, nextVersion, this.config);
     }

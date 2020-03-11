@@ -170,6 +170,18 @@ describe('PreconditionFunction', () => {
         return null;
     });
 
+    it('should fail with resolved promise', async () => {
+        const preconditionMock = jest.fn<Promise<boolean>, [ReleaseContext]>(() => Promise.resolve(false));
+
+        const error = await executeReleaseScriptFailure([preconditionMock], '1.0.0');
+        expect(error.message).toBe('Precondition \'mockConstructor\' failed');
+
+        expect(preconditionMock).toHaveBeenCalledTimes(1);
+        expect(preconditionMock.mock.calls[0][0].version.version).toBe('1.0.0');
+
+        return null;
+    });
+
     it('should fail', async () => {
         const preconditionMock = jest.fn<[boolean, string], [ReleaseContext]>(() => [false, 'Test error']);
 

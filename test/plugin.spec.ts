@@ -15,7 +15,7 @@ beforeEach(() => {
     return repo.git.addAndCommit('Initial commit');
 });
 
-async function executeReleaseScriptSuccess(plugins: (PluginInstance | PluginFunction)[],newVersion: string):
+async function executeReleaseScriptSuccess(plugins: (PluginInstance | PluginFunction)[], newVersion: string):
     Promise<void> {
     const releaseScript = new ReleaseScript({
         plugins,
@@ -45,7 +45,7 @@ async function executeReleaseScriptFailure(plugins: (PluginInstance | PluginFunc
 }
 
 describe('PluginObject', () => {
-    it('should be called', async () => {
+    it('should be called two times', async () => {
         let pluginCalledCount = 0;
         const pluginFunc = (): boolean => {
             pluginCalledCount++;
@@ -54,6 +54,25 @@ describe('PluginObject', () => {
 
         await executeReleaseScriptSuccess([{name: 'Test', apply: pluginFunc}] , '1.0.0');
         expect(pluginCalledCount).toBe(2);
+        return null;
+    });
+
+    it('should be called only once', async () => {
+        let pluginCalledCount = 0;
+        const pluginFunc = (): boolean => {
+            pluginCalledCount++;
+            return true;
+        };
+
+        const releaseScript = new ReleaseScript({
+            plugins: [{name: 'Test', apply: pluginFunc}],
+            snapshot: false,
+            push: false,
+        });
+
+        await releaseScript.release('1.0.0', repo.directory);
+        expect(await repo.git.tags()).toContain('v1.0.0');
+        expect(pluginCalledCount).toBe(1);
         return null;
     });
 
@@ -93,7 +112,7 @@ describe('PluginObject', () => {
         return null;
     });
 
-    it('should fail and hanlde returned promise', async () => {
+    it('should fail and handle returned promise', async () => {
         const pluginMock = jest.fn<Promise<boolean>, [ReleaseContext]>(() => Promise.reject('Plugin error'));
 
         const error = await executeReleaseScriptFailure([{name: 'Test', apply: pluginMock}], '1.0.0');
@@ -145,6 +164,18 @@ describe('PluginFunction', () => {
 
     it('should fail', async () => {
         const pluginMock = jest.fn<boolean, [ReleaseContext]>(() => false);
+
+        const error = await executeReleaseScriptFailure([pluginMock], '1.0.0');
+        expect(error.message).toBe('Plugin \'mockConstructor\' failed to execute');
+
+        expect(pluginMock).toHaveBeenCalledTimes(1);
+        expect(pluginMock.mock.calls[0][0].version.version).toBe('1.0.0');
+
+        return null;
+    });
+
+    it('should fail with resolved promise', async () => {
+        const pluginMock = jest.fn<Promise<boolean>, [ReleaseContext]>(() => Promise.resolve(false));
 
         const error = await executeReleaseScriptFailure([pluginMock], '1.0.0');
         expect(error.message).toBe('Plugin \'mockConstructor\' failed to execute');

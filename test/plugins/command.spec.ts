@@ -1,4 +1,4 @@
-import {Command} from '../../src/plugins/command';
+import {Command} from '../../src/plugins';
 
 // eslint-disable-next-line
 const context: any = {};
@@ -6,13 +6,13 @@ const context: any = {};
 describe('Plugin command executes', () => {
     it('with string', async () => {
         const command = new Command('exit 0');
-        await command.apply(context);
+        expect(await command.apply(context)).toBe(true);
         return null;
     });
 
     it('with function', async () => {
         const command = new Command(() => 'exit 0');
-        await command.apply(context);
+        expect(await command.apply(context)).toBe(true);
         return null;
     });
 });

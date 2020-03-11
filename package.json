@@ -58,14 +58,11 @@
   "scripts": {
     "lint": "npm run code-lint && node scripts/compile-to-definitions",
     "lint-fix": "node scripts/compile-to-definitions --write",
-    "code-lint": "npm run eslint -- . --ext .js,.ts,.json --cache",
+    "code-lint": "eslint . --ext .js,.ts,.json --cache",
     "prebuild": "npm run lint-fix",
-    "build": "npm run rollup -- -c",
-    "watch": "npm run rollup -- -c --watch",
-    "test": "jest",
-    "coverage": "jest --coverage",
-    "eslint": "node --max_old_space_size=4096 node_modules/eslint/bin/eslint.js",
-    "rollup": "node --max_old_space_size=4096 node_modules/rollup/dist/bin/rollup"
+    "build": "rollup -c",
+    "watch": "rollup -c --watch",
+    "test": "jest --coverage"
   },
   "files": [
     "dist/"

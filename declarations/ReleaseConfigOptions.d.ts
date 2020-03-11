@@ -31,7 +31,7 @@ export interface ReleaseConfigOptions {
      * Precondition checkers
      */
     preconditions?: (PreconditionInstance | PreconditionFunction)[];
-    shapshot?: BooleanOrString;
+    snapshot?: BooleanOrString;
     push?: boolean;
     tag?: BooleanOrString;
     /**
