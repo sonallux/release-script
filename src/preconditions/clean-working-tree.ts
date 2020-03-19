@@ -1,12 +1,16 @@
-import {PreconditionInstance} from '../../declarations/ReleaseConfigOptions';
+import {PreconditionFunction} from '../../declarations/ReleaseConfigOptions';
 import {ReleaseContext} from '../release-context';
 
-export class CleanWorkingTree implements PreconditionInstance {
-
-    name = 'CleanWorkingTree';
-
-    precondition: (context: ReleaseContext) => Promise<boolean> = async (context: ReleaseContext) => {
+export function CleanWorkingTree(): PreconditionFunction {
+    async function precondition(context: ReleaseContext): Promise<void> {
         const status = await context.git.status();
-        return status.isClean();
+        if (status.isClean()) {
+            return;
+        }
+        else {
+            throw new Error('Working Tree is not clean!');
+        }
     }
+
+    return precondition;
 }

@@ -8,7 +8,8 @@ import {Git} from './git';
 import {validate} from './validate';
 import {checkPreconditions} from './precondition';
 import {ReleaseContext} from './release-context';
-import {executePlugins} from './plugin';
+import {executeReleaseHooks} from './release-hook';
+import {executeVersionHooks} from './version-hook';
 
 export class ReleaseScript {
     constructor(private releaseConfig: ReleaseConfigOptions = {}) {
@@ -26,12 +27,14 @@ export class ReleaseScript {
         const context = new ReleaseContext(git, newVersion, this.releaseConfig);
 
         await checkPreconditions(context);
-        await executePlugins(context);
+        await executeVersionHooks(context);
         await context.git.addAndCommit(`Release version ${context.version} [CI SKIP]`);
         await context.doGitTag();
+        await executeReleaseHooks(context);
+
         const nextContext = context.getNextContext();
         if (nextContext !== null) {
-            await executePlugins(nextContext);
+            await executeVersionHooks(nextContext);
             await nextContext.git.addAndCommit('Prepare next release [CI SKIP]');
         }
 

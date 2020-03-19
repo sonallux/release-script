@@ -18,21 +18,15 @@ beforeEach(() => {
 
 describe('GitBranch with string', () => {
     it('should work on correct branch', () => {
-        const precondition = new GitBranch('master');
-        return expect(precondition.precondition(context)).resolves.toBe(true);
+        const precondition = GitBranch('master');
+        return expect(precondition(context)).resolves.toBe(undefined);
     });
 
-    it('should not work on wrong branch', async () => {
-        const precondition = new GitBranch('test');
+    it('should not work on wrong branch', () => {
+        const precondition = GitBranch('test');
 
-        try {
-            await precondition.precondition(context);
-        }
-        catch (error) {
-            expect(error.message).toBe('Expected branch "test" but got "master"!');
-            return null;
-        }
-        throw new Error('Precondition should have thrown error');
+        return expect(precondition(context))
+            .rejects.toHaveProperty('message', 'Expected branch "test" but got "master"!');
     });
 });
 
@@ -40,20 +34,15 @@ describe('GitBranch with RegExp', () => {
     it('should work on correct branch', async () => {
         await repo.git.simpleGit.checkout(['-b', 'v1.0']);
 
-        const precondition = new GitBranch(/^v[0-9]+\.[0-9]+$/);
-        return expect(precondition.precondition(context)).resolves.toBe(true);
+        const precondition = GitBranch(/^v[0-9]+\.[0-9]+$/);
+        return expect(precondition(context)).resolves.toBe(undefined);
     });
 
-    it('should not work on wrong branch', async () => {
-        const precondition = new GitBranch(/^v[0-9]+\.[0-9]+$/);
+    it('should not work on wrong branch', () => {
+        const precondition = GitBranch(/^v[0-9]+\.[0-9]+$/);
 
-        try {
-            await precondition.precondition(context);
-        }
-        catch (error) {
-            expect(error.message).toBe('Current branch "master" does not match pattern "/^v[0-9]+\\.[0-9]+$/"!');
-            return null;
-        }
-        throw new Error('Precondition should have thrown error');
+        return expect(precondition(context))
+            .rejects
+            .toHaveProperty('message', 'Current branch "master" does not match pattern "/^v[0-9]+\\.[0-9]+$/"!');
     });
 });

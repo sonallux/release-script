@@ -6,15 +6,21 @@
       "description": "Precondition checkers",
       "type": "array",
       "items": {
-        "description": "Precondition checker of type object or instanceof Function",
-        "anyOf": [
-          {
-            "$ref": "#/definitions/PreconditionInstance"
-          },
-          {
-            "$ref": "#/definitions/PreconditionFunction"
-          }
-        ]
+        "$ref": "#/definitions/PreconditionFunction"
+      }
+    },
+    "versionHook": {
+      "description": "Functions for the version hook",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/VersionFunction"
+      }
+    },
+    "releaseHook": {
+      "description": "Functions for the release hook",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ReleaseFunction"
       }
     },
     "snapshot": {
@@ -25,63 +31,23 @@
     },
     "tag": {
       "$ref": "#/definitions/BooleanOrString"
-    },
-    "plugins": {
-      "description": "Plugins for the version updater",
-      "type": "array",
-      "items": {
-        "description": "Plugin of type object or instanceof Function",
-        "anyOf": [
-          {
-            "$ref": "#/definitions/PluginInstance"
-          },
-          {
-            "$ref": "#/definitions/PluginFunction"
-          }
-        ]
-      }
     }
   },
   "definitions": {
-    "PluginFunction": {
-      "description": "Function acting as plugin",
-      "typeof": "function",
-      "tsType": "(context: import(\"../src/release-context\").ReleaseContext) => Promise<boolean> | boolean"
-    },
-    "PluginInstance": {
-      "description": "Plugin instance",
-      "type": "object",
-      "additionalProperties": true,
-      "properties": {
-        "apply": {
-          "$ref": "#/definitions/PluginFunction"
-        },
-        "name": {
-          "description": "Name of this plugin",
-          "type": "string"
-        }
-      },
-      "required": ["apply", "name"]
-    },
     "PreconditionFunction": {
-      "description": "Function acting as precondition checker",
+      "description": "Function to perform a precondition check",
       "typeof": "function",
-      "tsType": "(context: import(\"../src/release-context\").ReleaseContext) => Promise<boolean> | [boolean, string?]"
+      "tsType": "(context: import(\"../src/release-context\").ReleaseContext) => Promise<void>"
     },
-    "PreconditionInstance": {
-      "description": "Precondition checker instance",
-      "type": "object",
-      "additionalProperties": true,
-      "properties": {
-        "precondition": {
-          "$ref": "#/definitions/PreconditionFunction"
-        },
-        "name": {
-          "description": "Name of this precondition",
-          "type": "string"
-        }
-      },
-      "required": ["precondition", "name"]
+    "VersionFunction": {
+      "description": "Function to perform a version update",
+      "typeof": "function",
+      "tsType": "(context: import(\"../src/release-context\").ReleaseContext) => Promise<void>"
+    },
+    "ReleaseFunction": {
+      "description": "Function to perform a release",
+      "typeof": "function",
+      "tsType": "(context: import(\"../src/release-context\").ReleaseContext) => Promise<void>"
     },
     "BooleanOrString": {
       "oneOf": [

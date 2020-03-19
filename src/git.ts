@@ -19,12 +19,7 @@ export class Git {
     }
 
     async getCurrentBranchName(): Promise<string> {
-        try {
-            return await this.revParse(['--abbrev-ref', 'HEAD']);
-        }
-        catch (error) {
-            throw new Error('Failed to get current git branch name');
-        }
+        return await this.revParse(['--abbrev-ref', 'HEAD']);
     }
 
     async tags(): Promise<string[]> {
@@ -38,13 +33,8 @@ export class Git {
             return;
         }
         await this.git.add('.');
-        try {
-            await this.commit(message);
-            return;
-        }
-        catch (err) {
-            return Promise.reject(err);
-        }
+        await this.commit(message);
+        return;
     }
 
     commit(message: string, files?: string|string[]): Promise<simplegit.CommitSummary> {

@@ -1,27 +1,21 @@
-import {PreconditionInstance} from '../../declarations/ReleaseConfigOptions';
+import {PreconditionFunction} from '../../declarations/ReleaseConfigOptions';
 import {ReleaseContext} from '../release-context';
 
-export class GitBranch implements PreconditionInstance {
-
-    name = 'GitBranch';
-
-    constructor(private branchName: RegExp | string) {}
-
-    precondition: (context: ReleaseContext) => Promise<boolean> = async (context: ReleaseContext) => {
+export function GitBranch(branchName: RegExp | string): PreconditionFunction {
+    async function precondition(context: ReleaseContext): Promise<void> {
         const currentBranch = await context.git.getCurrentBranchName();
 
-        if (typeof this.branchName === 'string') {
-            if (this.branchName === currentBranch) {
-                return true;
+        if (typeof branchName === 'string') {
+            if (branchName === currentBranch) {
+                return;
             }
-            throw new Error(`Expected branch "${this.branchName}" but got "${currentBranch}"!`);
+            throw new Error(`Expected branch "${branchName}" but got "${currentBranch}"!`);
         }
-        else if (this.branchName.test(currentBranch)) {
-            return true;
+        else if (branchName.test(currentBranch)) {
+            return;
         }
-        throw new Error(`Current branch "${currentBranch}" does not match pattern "${this.branchName}"!`);
+        throw new Error(`Current branch "${currentBranch}" does not match pattern "${branchName}"!`);
+    }
 
-    };
-
-
+    return precondition;
 }

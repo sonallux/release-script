@@ -5,65 +5,46 @@
  */
 
 /**
- * Function acting as precondition checker
+ * Function to perform a precondition check
  *
  * This interface was referenced by `ReleaseConfigOptions`'s JSON-Schema
  * via the `definition` "PreconditionFunction".
  */
-export type PreconditionFunction = (
-    context: import("../src/release-context").ReleaseContext
-) => Promise<boolean> | [boolean, string?];
+export type PreconditionFunction = (context: import("../src/release-context").ReleaseContext) => Promise<void>;
+/**
+ * Function to perform a version update
+ *
+ * This interface was referenced by `ReleaseConfigOptions`'s JSON-Schema
+ * via the `definition` "VersionFunction".
+ */
+export type VersionFunction = (context: import("../src/release-context").ReleaseContext) => Promise<void>;
+/**
+ * Function to perform a release
+ *
+ * This interface was referenced by `ReleaseConfigOptions`'s JSON-Schema
+ * via the `definition` "ReleaseFunction".
+ */
+export type ReleaseFunction = (context: import("../src/release-context").ReleaseContext) => Promise<void>;
 /**
  * This interface was referenced by `ReleaseConfigOptions`'s JSON-Schema
  * via the `definition` "BooleanOrString".
  */
 export type BooleanOrString = boolean | string;
-/**
- * Function acting as plugin
- *
- * This interface was referenced by `ReleaseConfigOptions`'s JSON-Schema
- * via the `definition` "PluginFunction".
- */
-export type PluginFunction = (context: import("../src/release-context").ReleaseContext) => Promise<boolean> | boolean;
 
 export interface ReleaseConfigOptions {
     /**
      * Precondition checkers
      */
-    preconditions?: (PreconditionInstance | PreconditionFunction)[];
+    preconditions?: PreconditionFunction[];
+    /**
+     * Functions for the version hook
+     */
+    versionHook?: VersionFunction[];
+    /**
+     * Functions for the release hook
+     */
+    releaseHook?: ReleaseFunction[];
     snapshot?: BooleanOrString;
     push?: boolean;
     tag?: BooleanOrString;
-    /**
-     * Plugins for the version updater
-     */
-    plugins?: (PluginInstance | PluginFunction)[];
-}
-/**
- * Precondition checker instance
- *
- * This interface was referenced by `ReleaseConfigOptions`'s JSON-Schema
- * via the `definition` "PreconditionInstance".
- */
-export interface PreconditionInstance {
-    precondition: PreconditionFunction;
-    /**
-     * Name of this precondition
-     */
-    name: string;
-    [k: string]: any;
-}
-/**
- * Plugin instance
- *
- * This interface was referenced by `ReleaseConfigOptions`'s JSON-Schema
- * via the `definition` "PluginInstance".
- */
-export interface PluginInstance {
-    apply: PluginFunction;
-    /**
-     * Name of this plugin
-     */
-    name: string;
-    [k: string]: any;
 }

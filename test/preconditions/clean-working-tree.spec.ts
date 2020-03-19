@@ -18,18 +18,17 @@ beforeEach(() => {
 
 describe('Precondition CleanWorkingTree', () => {
 
-    it('should pass', async () => {
-        const precondition = new CleanWorkingTree();
-        expect(await precondition.precondition(context)).toBe(true);
-        return null;
+    it('should pass', () => {
+        const precondition = CleanWorkingTree();
+        return expect(precondition(context)).resolves.toBe(undefined);
     });
 
-    it('should fail', async () => {
+    it('should fail', () => {
         fs.writeFileSync(path.resolve(repo.directory, 'test.txt'), 'This is a changed test file!');
 
-        const precondition = new CleanWorkingTree();
-        expect(await precondition.precondition(context)).toBe(false);
-        return null;
+        const precondition = CleanWorkingTree();
+        return expect(precondition(context))
+            .rejects.toHaveProperty('message', 'Working Tree is not clean!');
     });
 
 });
