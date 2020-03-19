@@ -42,16 +42,16 @@ export default [
         plugins,
     },
     {
-        input: 'src/plugins/index.ts',
+        input: 'src/version-hooks/index.ts',
         output: {
-            file: 'dist/plugins.js',
+            file: 'dist/version-hooks.js',
             format: 'cjs',
         },
         external,
         plugins,
     },
     {
-        input: ['src/cli.ts', 'src/preconditions/index.ts', 'src/plugins/index.ts'],
+        input: ['src/cli.ts', 'src/preconditions/index.ts', 'src/version-hooks/index.ts'],
         output: {
             file: 'dist/release-script-standalone.js',
             format: 'cjs',

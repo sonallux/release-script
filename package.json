@@ -1,6 +1,6 @@
 {
   "name": "release-script",
-  "version": "1.0.1",
+  "version": "1.0.0-dev.0",
   "description": "",
   "repository": {
     "type": "git",
@@ -59,8 +59,8 @@
     "lint": "npm run code-lint && node scripts/compile-to-definitions",
     "lint-fix": "node scripts/compile-to-definitions --write",
     "code-lint": "eslint . --ext .js,.ts,.json --cache",
-    "prebuild": "npm run lint-fix",
-    "build": "rollup -c",
+    "prebuild": "rimraf dist",
+    "build": "npm run lint-fix && rollup -c",
     "watch": "rollup -c --watch",
     "test": "jest --coverage"
   },
