@@ -54,7 +54,7 @@ export class Git {
     }
 
     push(): Promise<void> {
-        return this.git.push();
+        return this.git.push(undefined, undefined, {'--follow-tags': null});
     }
 
     get simpleGit(): simplegit.SimpleGit {

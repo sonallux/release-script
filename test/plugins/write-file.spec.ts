@@ -1,5 +1,5 @@
 import {readFileSync} from 'fs';
-import path = require('path');
+import path from 'path';
 
 import semver from 'semver';
 

@@ -1,5 +1,5 @@
-import fs = require('fs');
-import path = require('path');
+import {writeFileSync} from 'fs';
+import path from 'path';
 
 import {ReleaseScript} from '../src/release-script';
 import {ReleaseContext} from '../src/release-context';
@@ -11,7 +11,7 @@ let repo: TestGitRepo;
 
 beforeEach(() => {
     repo = new TestGitRepo('TestPreconditionRepo');
-    fs.writeFileSync(path.resolve(repo.directory, 'test.txt'), 'This is a test file!');
+    writeFileSync(path.resolve(repo.directory, 'test.txt'), 'This is a test file!');
     return repo.git.addAndCommit('Initial commit');
 });
 

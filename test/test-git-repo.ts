@@ -1,9 +1,9 @@
-import path = require('path');
-import fs = require('fs');
+import {existsSync, readdirSync} from 'fs';
+import path from 'path';
 
-import rimraf = require('rimraf');
-import mkdirp = require('mkdirp');
-import simplegit = require('simple-git/promise');
+import rimraf from 'rimraf';
+import mkdirp from 'mkdirp';
+import simplegit from 'simple-git/promise';
 
 import {Git} from '../src/git';
 
@@ -11,8 +11,8 @@ const DEFAULT_REPO_FOLDER = './test-temp';
 
 export function createTestDirectory(name: string): string {
     const directory = path.resolve(DEFAULT_REPO_FOLDER, name);
-    if (fs.existsSync(directory)) {
-        for (const file of fs.readdirSync(directory)) {
+    if (existsSync(directory)) {
+        for (const file of readdirSync(directory)) {
             //console.log(`Deleting: ${path.resolve(this._directory, file)}`);
             rimraf.sync(path.resolve(directory, file));
         }
