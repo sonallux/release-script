@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "preconditions": {
+      "description": "Precondition checkers",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/PreconditionFunction"
+      }
+    },
+    "versionHook": {
+      "description": "Functions for the version hook",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/VersionFunction"
+      }
+    },
+    "releaseHook": {
+      "description": "Functions for the release hook",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ReleaseFunction"
+      }
+    },
+    "developmentVersion": {
+      "$ref": "#/definitions/BooleanOrString"
+    },
+    "push": {
+      "type": "boolean"
+    },
+    "tag": {
+      "$ref": "#/definitions/BooleanOrString"
+    }
+  },
+  "definitions": {
+    "PreconditionFunction": {
+      "description": "Function to perform a precondition check",
+      "typeof": "function",
+      "tsType": "(context: import(\"../src/release-context\").ReleaseContext) => Promise<void>"
+    },
+    "VersionFunction": {
+      "description": "Function to perform a version update",
+      "typeof": "function",
+      "tsType": "(context: import(\"../src/release-context\").ReleaseContext) => Promise<void>"
+    },
+    "ReleaseFunction": {
+      "description": "Function to perform a release",
+      "typeof": "function",
+      "tsType": "(context: import(\"../src/release-context\").ReleaseContext) => Promise<void>"
+    },
+    "BooleanOrString": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    }
+  }
+}
