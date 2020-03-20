@@ -1,5 +1,6 @@
 import {execSync} from 'child_process';
 import {readFileSync} from 'fs';
+import path from 'path';
 
 import semver from 'semver';
 
@@ -23,7 +24,7 @@ describe('Plugin NpmPackage', () => {
         context.version = semver.parse('1.0.1');
         await plugin(context);
 
-        const packageJson = JSON.parse(readFileSync(`${testDir}/package.json`).toString('utf-8'));
+        const packageJson = JSON.parse(readFileSync(path.resolve(testDir, 'package.json')).toString('utf-8'));
         expect(packageJson.version).toEqual('1.0.1');
 
         return null;
@@ -36,7 +37,7 @@ describe('Plugin NpmPackage', () => {
         context.version = semver.parse('1.0.0');
         await plugin(context);
 
-        const packageJson = JSON.parse(readFileSync(`${testDir}/package.json`).toString('utf-8'));
+        const packageJson = JSON.parse(readFileSync(path.resolve(testDir, 'package.json')).toString('utf-8'));
         expect(packageJson.version).toEqual('1.0.0');
 
         return null;

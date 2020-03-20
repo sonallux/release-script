@@ -20,6 +20,7 @@ module.exports =  {
         "object-curly-spacing": ["error", "never"],
         "no-var": "error",
         "import/order": ["error", {"newlines-between": "always"}],
+        "import/default": "off",
         "arrow-parens": ["error", "as-needed"],
         "comma-dangle": ["error", "always-multiline"],
         "brace-style": ["error", "stroustrup"],
