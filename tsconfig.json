@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+		"lib": ["es2017"],
+		"module": "es6",
+    "moduleResolution": "node",
+		"noEmitOnError": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"pretty": true,
+    "resolveJsonModule": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"target": "es2016"
+  },
+  "include": [
+    "src/**/*",
+    "declarations/**/*",
+    "types/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
