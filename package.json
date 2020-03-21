@@ -53,7 +53,7 @@
     "rollup": "1.32.1",
     "ts-jest": "25.2.1",
     "tslib": "1.10.0",
-    "typescript": "3.6.4"
+    "typescript": "3.8.3"
   },
   "scripts": {
     "lint": "npm run code-lint && node scripts/compile-to-definitions",
