@@ -38,5 +38,5 @@ describe('Plugin MavenPom', () => {
         expect(actualPom).toEqual(expectedPom);
 
         return null;
-    });
+    }, 60000);
 });
