@@ -1,5 +1,9 @@
 # Release script
 
+![Build](https://github.com/jsone-studios/release-script/workflows/Build/badge.svg)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=jsone-studios/release-script)](https://dependabot.com)
+[![GitHub](https://img.shields.io/github/license/jsone-studios/release-script)](https://github.com/jsone-studios/release-script/blob/master/LICENSE)
+
 Release script automates your release process for projects using git. Typically, releases involve a fixed number of steps to be executed in a given order. Most often these steps are always present:
 1. Update the version number and do a `git commit`
 2. Do a `git tag`
