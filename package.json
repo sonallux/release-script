@@ -17,7 +17,7 @@
     "release-script": "./dist/bin/release-script-cli.js"
   },
   "dependencies": {
-    "ajv": "6.10.2",
+    "ajv": "6.12.0",
     "ajv-keywords": "3.4.1",
     "command-line-args": "5.1.1",
     "command-line-usage": "6.1.0",
