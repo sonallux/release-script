@@ -1,7 +1,7 @@
 import {writeFileSync} from 'fs';
 import path from 'path';
 
-import semver from 'semver';
+import semverParse from 'semver/functions/parse';
 
 import {NewVersion} from '../../src/preconditions';
 import {TestGitRepo} from '../test-git-repo';
@@ -23,7 +23,7 @@ describe('NewVersion', () => {
         await context.git.tag('v1.0.0', 'Release 1.0.0');
 
         const precondition = NewVersion();
-        context.version = semver.parse('1.0.1');
+        context.version = semverParse('1.0.1');
         return expect(precondition(context)).resolves.toBe(undefined);
     });
 
@@ -31,7 +31,7 @@ describe('NewVersion', () => {
         await context.git.tag('v1.0.0', 'Release 1.0.0');
 
         const precondition = NewVersion();
-        context.version = semver.parse('1.0.0');
+        context.version = semverParse('1.0.0');
         return expect(precondition(context))
             .rejects.toHaveProperty('message', 'Version has already been released: 1.0.0!');
     });

@@ -1,7 +1,7 @@
 import {readFileSync, writeFileSync} from 'fs';
 import path from 'path';
 
-import semver from 'semver';
+import semverParse from 'semver/functions/parse';
 
 import {MavenPom} from '../../src/version-hooks';
 
@@ -30,7 +30,7 @@ beforeEach(() => {
 describe('Plugin MavenPom', () => {
     it('updates version number', async () => {
         const plugin = MavenPom({cwd: testDir});
-        context.version = semver.parse('1.1.0');
+        context.version = semverParse('1.1.0');
         await plugin(context);
 
         const actualPom = readFileSync(path.resolve(testDir, 'pom.xml')).toString('utf-8');
