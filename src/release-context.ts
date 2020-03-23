@@ -1,4 +1,4 @@
-import {SemVer} from 'semver';
+import SemVer from 'semver/classes/semver';
 
 import {ReleaseConfigOptions} from '../declarations/ReleaseConfigOptions';
 

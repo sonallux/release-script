@@ -1,14 +1,14 @@
 import {readFileSync} from 'fs';
 import path from 'path';
 
-import semver from 'semver';
+import semverParse from 'semver/functions/parse';
 
 import {WriteFile} from '../../src/version-hooks';
 import {createTestDirectory} from '../test-git-repo';
 
 // eslint-disable-next-line
 const context: any = {
-    version: semver.parse('1.0.0'),
+    version: semverParse('1.0.0'),
 };
 
 const testDir = createTestDirectory('TestPluginWriteFile');

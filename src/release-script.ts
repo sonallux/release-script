@@ -1,6 +1,6 @@
 import path from 'path';
 
-import semver from 'semver';
+import semverParse from 'semver/functions/parse';
 
 import {ReleaseConfigOptions} from '../declarations/ReleaseConfigOptions';
 
@@ -17,7 +17,7 @@ export class ReleaseScript {
     }
 
     public async release(newVersionString: string, directory = '.'): Promise<void> {
-        const newVersion = semver.parse(newVersionString);
+        const newVersion = semverParse(newVersionString);
         if (newVersion === null) {
             console.log(`New version does not follow the semantic version specification: ${newVersion}`);
             return;

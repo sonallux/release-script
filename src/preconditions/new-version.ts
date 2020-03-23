@@ -1,4 +1,4 @@
-import semver from 'semver';
+import semverCoerce from 'semver/functions/coerce';
 
 import {PreconditionFunction} from '../../declarations/ReleaseConfigOptions';
 import {ReleaseContext} from '../release-context';
@@ -13,7 +13,7 @@ export function NewVersion(): PreconditionFunction {
         const tags = await context.git.simpleGit.tags();
 
         const isNewVersion = tags.all
-            .map(v => semver.coerce(v))
+            .map(v => semverCoerce(v))
             .filter(notEmpty)
             .every(v => context.version.compare(v) !== 0);
 
