@@ -62,7 +62,7 @@ describe('Version Hook', () => {
 
         const releaseScript = new ReleaseScript({
             versionHook: [pluginMock],
-            developmentVersion: false,
+            nextDevelopmentVersion: false,
             push: false,
         });
 
