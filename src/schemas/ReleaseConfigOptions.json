@@ -23,7 +23,7 @@
         "$ref": "#/definitions/ReleaseFunction"
       }
     },
-    "developmentVersion": {
+    "nextDevelopmentVersion": {
       "$ref": "#/definitions/BooleanOrString"
     },
     "push": {

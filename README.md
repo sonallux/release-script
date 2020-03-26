@@ -14,13 +14,25 @@ Release Script will execute all these steps and can be customized to your needs 
 
 ## Usage
 
+## Configuration
+Release Script takes an optional configuration object. Following properties are available:
+- `push: boolean` whether to execute the `git push` command. Default: `true`
+- `nextDevelopmentVersion: boolean | string` whether to update to the next development version after the release. If set to `true` and a release of version `1.0.0`, the next development version will be `1.0.0-0`. A string can used to specify the prerelease id (e.g. using `'dev'` will result in `1.0.0-dev.0`). Default: `true`
+- `tag: boolean | string` whether to perform a `git tag`. A string can be used to specify a prefix for the tag name (e.g. a prefix of `'v'` will generate a git tag `v1.0.0`). Default: `'v'`
+- `preconditions` Array of [precondition hook function](#precondition-hook).
+- `versionHook` Array of [version update hook function](#version-update-hook).
+- `releaseHook` Array of [release hook function](#release-hook).
+
 ## Custom Hooks
 The release script can be customized by the following hooks
+<a name="precondition-hook"></a>
 - Precondition: Checks that must be valid before performing a release.
+<a name="version-update-hook"></a>
 - Version update hook: Update the version (e.g. change version field in package.json)
+<a name="release-hook"></a>
 - Release hook: Perform the actual release (e.g. publish package to npm)
 
-Every hook is a function which gets the current ReleaseContext as the only argument and should return a Promise.
+Every hook is a function which gets the current [ReleaseContext](#release-context) as the only argument and should return a Promise, that resolves for a successfull execution and rejects for an error. Errors will cause release script to terminate without any special error handling or reverting changes. Therefore extra care must be taken by the user if release script terminates with an error.
 
 ### Execution order
 1. All precondition hooks
@@ -31,6 +43,14 @@ Every hook is a function which gets the current ReleaseContext as the only argum
 6. All version update hooks with the next development version (optional)
 7. `git commit` (only if previous version hook changed any files)
 8. `git push`
+
+<a name="release-context"></a>
+### `ReleaseContext`
+The `ReleaseContext` holds any information relevant to the current release. The following properties are available:
+- `version` An instance of the [`SemVer`](https://github.com/npm/node-semver) class holding the current version number
+- `git` An instance of the `Git` class holding a reference to the current git repository
+- `config` the configuration object the release script was started with.
+- `isNextDevelopmentVersion: boolean` This will only be `true` for the version update hook with the next development version, otherwise it will be `false`
 
 ## License
 
