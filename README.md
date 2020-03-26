@@ -32,7 +32,7 @@ The release script can be customized by the following hooks
 <a name="release-hook"></a>
 - Release hook: Perform the actual release (e.g. publish package to npm)
 
-Every hook is a function which gets the current ReleaseContext as the only argument and should return a Promise.
+Every hook is a function which gets the current [ReleaseContext](#release-context) as the only argument and should return a Promise, that resolves for a successfull execution and rejects for an error. Errors will cause release script to terminate without any special error handling or reverting changes. Therefore extra care must be taken by the user if release script terminates with an error.
 
 ### Execution order
 1. All precondition hooks
@@ -43,6 +43,14 @@ Every hook is a function which gets the current ReleaseContext as the only argum
 6. All version update hooks with the next development version (optional)
 7. `git commit` (only if previous version hook changed any files)
 8. `git push`
+
+<a name="release-context"></a>
+### `ReleaseContext`
+The `ReleaseContext` holds any information relevant to the current release. The following properties are available:
+- `version` An instance of the [`SemVer`](https://github.com/npm/node-semver) class holding the current version number
+- `git` An instance of the `Git` class holding a reference to the current git repository
+- `config` the configuration object the release script was started with.
+- `isNextDevelopmentVersion: boolean` This will only be `true` for the version update hook with the next development version, otherwise it will be `false`
 
 ## License
 

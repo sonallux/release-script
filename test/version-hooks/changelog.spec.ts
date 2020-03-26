@@ -30,7 +30,7 @@ describe('Version Hook Changelog', () => {
         const plugin = Changelog(testChangelogFile);
         context.isNextDevelopmentVersion = false;
         return expect(plugin(context))
-            .rejects.toHaveProperty('message', `Changelog could not find Unreleased section in ${testChangelogFile}!`);
+            .rejects.toHaveProperty('message', `Changelog could not find 'Unreleased' header in ${testChangelogFile}!`);
     });
 
     it('should update changelog file', async () => {
@@ -44,5 +44,18 @@ describe('Version Hook Changelog', () => {
 
         expect(readFileSync(testChangelogFile, 'utf-8'))
             .toEqual('# Changelog\n\n## [Unreleased]\n\n## [1.1.0]\n- Foo\n\n## [1.0.0]\n- Bar\n');
+    });
+
+    it('should update changelog file with custom header', async () => {
+        writeFileSync(testChangelogFile, '# Changelog\n\n## [Unreleased]\n- Foo\n\n## [1.0.0]\n- Bar\n');
+
+        const plugin = Changelog(testChangelogFile, () => Promise.resolve('## Foo Bar Header'));
+        context.isNextDevelopmentVersion = false;
+        context.version = semverParse('1.1.0');
+
+        await plugin(context);
+
+        expect(readFileSync(testChangelogFile, 'utf-8'))
+            .toEqual('# Changelog\n\n## [Unreleased]\n\n## Foo Bar Header\n- Foo\n\n## [1.0.0]\n- Bar\n');
     });
 });

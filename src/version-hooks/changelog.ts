@@ -4,8 +4,13 @@ import {promisify} from 'util';
 import {VersionFunction} from '../../declarations/ReleaseConfigOptions';
 import {ReleaseContext} from '../release-context';
 
+function defaultReleaseHeader(context: ReleaseContext): Promise<string> {
+    return Promise.resolve(`## [${context.version.version}]`);
+}
+
 export function Changelog(
     file: string,
+    releaseHeader = defaultReleaseHeader,
     fileEncoding = 'utf-8',
 ): VersionFunction {
     const writeFile = promisify(writeFileCallback);
@@ -24,10 +29,10 @@ export function Changelog(
                 
             }
             if (unreleasedLineIndex === -1) {
-                throw new Error(`Changelog could not find Unreleased section in ${file}!`);
+                throw new Error(`Changelog could not find 'Unreleased' header in ${file}!`);
             }
-            const newVersionSection = `## [${context.version.version}]`;
-            lines.splice(unreleasedLineIndex + 1, 0, '', newVersionSection);
+            const newVersionHeader = await releaseHeader(context);
+            lines.splice(unreleasedLineIndex + 1, 0, '', newVersionHeader);
 
             await writeFile(file, lines.join('\n'), fileEncoding);
         }
