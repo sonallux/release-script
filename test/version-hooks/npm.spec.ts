@@ -14,13 +14,14 @@ let testDir: string;
 
 beforeEach(() => {
     testDir = createTestDirectory('TestPluginNpmPackage');
+    context.directory = testDir;
 });
 
 describe('Plugin NpmPackage', () => {
     it('updates version number', async () => {
         execSync('npm init -y', {cwd: testDir});
 
-        const plugin = NpmPackage({cwd: testDir});
+        const plugin = NpmPackage();
         context.version = semverParse('1.0.1');
         await plugin(context);
 
@@ -33,7 +34,7 @@ describe('Plugin NpmPackage', () => {
     it('updates to same version number', async () => {
         execSync('npm init -y', {cwd: testDir});
 
-        const plugin = NpmPackage({cwd: testDir});
+        const plugin = NpmPackage();
         context.version = semverParse('1.0.0');
         await plugin(context);
 

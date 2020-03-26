@@ -47,9 +47,10 @@ Every hook is a function which gets the current [ReleaseContext](#release-contex
 <a name="release-context"></a>
 ### `ReleaseContext`
 The `ReleaseContext` holds any information relevant to the current release. The following properties are available:
+- `directory: string` The root directory of the git repository
 - `version` An instance of the [`SemVer`](https://github.com/npm/node-semver) class holding the current version number
-- `git` An instance of the `Git` class holding a reference to the current git repository
 - `config` the configuration object the release script was started with.
+- `git` An instance of the `Git` class holding a reference to the current git repository
 - `isNextDevelopmentVersion: boolean` This will only be `true` for the version update hook with the next development version, otherwise it will be `false`
 
 ## License

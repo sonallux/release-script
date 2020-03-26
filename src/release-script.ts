@@ -23,8 +23,9 @@ export class ReleaseScript {
             return;
         }
 
-        const git = Git.openRepo(path.resolve(directory));
-        const context = new ReleaseContext(git, newVersion, this.releaseConfig, false);
+        const currentDirectory = path.resolve(directory);
+        const git = Git.openRepo(path.resolve(currentDirectory));
+        const context = new ReleaseContext(currentDirectory, newVersion, this.releaseConfig, git, false);
 
         await checkPreconditions(context);
         await executeVersionHooks(context);
