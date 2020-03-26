@@ -7,9 +7,10 @@ import {Git} from './git';
 export class ReleaseContext {
 
     constructor(
-        public git: Git,
+        public directory: string,
         public version: SemVer,
         public config: ReleaseConfigOptions,
+        public git: Git,
         public isNextDevelopmentVersion: boolean) {}
 
     doGitTag(): Promise<void> {
@@ -38,6 +39,6 @@ export class ReleaseContext {
             ? undefined
             : this.config.nextDevelopmentVersion;
         const nextVersion = new SemVer(this.version.version).inc('prerelease', id);
-        return new ReleaseContext(this.git, nextVersion, this.config, true);
+        return new ReleaseContext(this.directory, nextVersion, this.config, this.git, true);
     }
 }

@@ -24,12 +24,13 @@ function getPom(version: string): string {
 
 beforeEach(() => {
     testDir = path.resolve('./test-maven');
+    context.directory = testDir;
     writeFileSync(path.resolve(testDir, 'pom.xml'), getPom('1.0.0'), 'utf-8');
 });
 
 describe('Plugin MavenPom', () => {
     it('updates version number', async () => {
-        const plugin = MavenPom({cwd: testDir});
+        const plugin = MavenPom();
         context.version = semverParse('1.1.0');
         await plugin(context);
 

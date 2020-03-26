@@ -13,7 +13,7 @@ export function Command(
     async function pluginFunction(context: ReleaseContext): Promise<void> {
         const command = typeof cmdString === 'string' ? cmdString : cmdString(context);
         try {
-            await exec(command, options);
+            await exec(command, {cwd: context.directory, ...options});
             return;
         }
         catch (err) {
