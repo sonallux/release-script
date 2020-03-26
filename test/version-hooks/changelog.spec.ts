@@ -13,13 +13,14 @@ let testChangelogFile: string;
 
 beforeEach(() => {
     const testDir = createTestDirectory('TestPluginChangelog');
+    context.directory = testDir;
     testChangelogFile = path.resolve(testDir, 'CHANGELOG.md');
 });
 
 describe('Version Hook Changelog', () => {
     it('should do nothing on next development version', () => {
         writeFileSync(testChangelogFile, 'Wrong Changelog format\nTest\n');
-        const plugin = Changelog(testChangelogFile);
+        const plugin = Changelog('CHANGELOG.md');
         context.isNextDevelopmentVersion = true;
         return expect(plugin(context)).resolves.toBe(undefined);
     });
@@ -27,16 +28,16 @@ describe('Version Hook Changelog', () => {
     it('should throw error in malformed changelog file', () => {
         writeFileSync(testChangelogFile, 'Wrong Changelog format\nTest\n');
 
-        const plugin = Changelog(testChangelogFile);
+        const plugin = Changelog('CHANGELOG.md');
         context.isNextDevelopmentVersion = false;
         return expect(plugin(context))
-            .rejects.toHaveProperty('message', `Changelog could not find 'Unreleased' header in ${testChangelogFile}!`);
+            .rejects.toHaveProperty('message', 'Changelog could not find \'Unreleased\' header in CHANGELOG.md!');
     });
 
     it('should update changelog file', async () => {
         writeFileSync(testChangelogFile, '# Changelog\n\n## [Unreleased]\n- Foo\n\n## [1.0.0]\n- Bar\n');
 
-        const plugin = Changelog(testChangelogFile);
+        const plugin = Changelog('CHANGELOG.md');
         context.isNextDevelopmentVersion = false;
         context.version = semverParse('1.1.0');
 
@@ -49,7 +50,7 @@ describe('Version Hook Changelog', () => {
     it('should update changelog file with custom header', async () => {
         writeFileSync(testChangelogFile, '# Changelog\n\n## [Unreleased]\n- Foo\n\n## [1.0.0]\n- Bar\n');
 
-        const plugin = Changelog(testChangelogFile, () => Promise.resolve('## Foo Bar Header'));
+        const plugin = Changelog('CHANGELOG.md', () => Promise.resolve('## Foo Bar Header'));
         context.isNextDevelopmentVersion = false;
         context.version = semverParse('1.1.0');
 

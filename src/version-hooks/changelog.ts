@@ -1,5 +1,6 @@
 import {writeFile as writeFileCallback, readFile as readFileCallback} from 'fs';
 import {promisify} from 'util';
+import path from 'path';
 
 import {VersionFunction} from '../../declarations/ReleaseConfigOptions';
 import {ReleaseContext} from '../release-context';
@@ -18,7 +19,8 @@ export function Changelog(
 
     async function pluginFunction(context: ReleaseContext): Promise<void> {
         if (!context.isNextDevelopmentVersion) {
-            const oldChangelog = await readFile(file, fileEncoding);
+            const fullFilePath = path.resolve(context.directory, file);
+            const oldChangelog = await readFile(fullFilePath, fileEncoding);
             const lines = oldChangelog.split('\n');
             let unreleasedLineIndex = -1;
             for (let i = 0; i < lines.length; i++) {
@@ -34,7 +36,7 @@ export function Changelog(
             const newVersionHeader = await releaseHeader(context);
             lines.splice(unreleasedLineIndex + 1, 0, '', newVersionHeader);
 
-            await writeFile(file, lines.join('\n'), fileEncoding);
+            await writeFile(fullFilePath, lines.join('\n'), fileEncoding);
         }
     }
 
