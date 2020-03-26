@@ -33,7 +33,7 @@
     "@rollup/plugin-multi-entry": "3.0.0",
     "@rollup/plugin-node-resolve": "7.1.1",
     "@rollup/plugin-typescript": "3.0.0",
-    "@types/node": "12.12.5",
+    "@types/node": "12.12.31",
     "@types/command-line-args": "5.0.0",
     "@types/command-line-usage": "5.0.1",
     "@types/jest": "25.1.4",
