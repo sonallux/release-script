@@ -15,18 +15,6 @@ beforeEach(() => {
     return repo.git.addAndCommit('Initial commit');
 });
 
-async function executeReleaseScriptSuccess(versionHook: VersionFunction[], newVersion: string):
-    Promise<void> {
-    const releaseScript = new ReleaseScript({
-        versionHook,
-        push: false,
-    });
-
-    await releaseScript.release(newVersion, repo.directory);
-    expect(await repo.git.tags()).toContain(`v${newVersion}`);
-    return;
-}
-
 async function executeReleaseScriptFailure(versionHook: VersionFunction[], newVersion: string):
     Promise<Error> {
     const releaseScript = new ReleaseScript({
@@ -45,14 +33,41 @@ async function executeReleaseScriptFailure(versionHook: VersionFunction[], newVe
 }
 
 describe('Version Hook', () => {
-    it('should be called two times', async () => {
+    it('should create next development version without prerelease id', async () => {
         const pluginMock = jest.fn<Promise<void>, [ReleaseContext]>(() => Promise.resolve());
 
-        await executeReleaseScriptSuccess([pluginMock], '1.0.0');
+        const releaseScript = new ReleaseScript({
+            versionHook: [pluginMock],
+            push: false,
+        });
 
+        await releaseScript.release('1.0.0', repo.directory);
+        expect(await repo.git.tags()).toContain('v1.0.0');
         expect(pluginMock).toHaveBeenCalledTimes(2);
+        expect(pluginMock.mock.calls[0][0].isNextDevelopmentVersion).toBe(false);
         expect(pluginMock.mock.calls[0][0].version.version).toBe('1.0.0');
+        expect(pluginMock.mock.calls[1][0].isNextDevelopmentVersion).toBe(true);
         expect(pluginMock.mock.calls[1][0].version.version).toBe('1.0.1-0');
+
+        return null;
+    });
+
+    it('should create next development version with prerelease id', async () => {
+        const pluginMock = jest.fn<Promise<void>, [ReleaseContext]>(() => Promise.resolve());
+
+        const releaseScript = new ReleaseScript({
+            versionHook: [pluginMock],
+            nextDevelopmentVersion: 'dev',
+            push: false,
+        });
+
+        await releaseScript.release('1.0.0', repo.directory);
+        expect(await repo.git.tags()).toContain('v1.0.0');
+        expect(pluginMock).toHaveBeenCalledTimes(2);
+        expect(pluginMock.mock.calls[0][0].isNextDevelopmentVersion).toBe(false);
+        expect(pluginMock.mock.calls[0][0].version.version).toBe('1.0.0');
+        expect(pluginMock.mock.calls[1][0].isNextDevelopmentVersion).toBe(true);
+        expect(pluginMock.mock.calls[1][0].version.version).toBe('1.0.1-dev.0');
 
         return null;
     });
@@ -62,13 +77,14 @@ describe('Version Hook', () => {
 
         const releaseScript = new ReleaseScript({
             versionHook: [pluginMock],
-            developmentVersion: false,
+            nextDevelopmentVersion: false,
             push: false,
         });
 
         await releaseScript.release('1.0.0', repo.directory);
         expect(await repo.git.tags()).toContain('v1.0.0');
         expect(pluginMock).toHaveBeenCalledTimes(1);
+        expect(pluginMock.mock.calls[0][0].isNextDevelopmentVersion).toBe(false);
         expect(pluginMock.mock.calls[0][0].version.version).toBe('1.0.0');
 
         return null;

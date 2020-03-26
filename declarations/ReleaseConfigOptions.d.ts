@@ -44,7 +44,7 @@ export interface ReleaseConfigOptions {
      * Functions for the release hook
      */
     releaseHook?: ReleaseFunction[];
-    developmentVersion?: BooleanOrString;
+    nextDevelopmentVersion?: BooleanOrString;
     push?: boolean;
     tag?: BooleanOrString;
 }
