@@ -1,10 +1,13 @@
 {
-  "name": "release-script",
-  "version": "1.0.0-dev.0",
-  "description": "",
+  "name": "@jsone-studios/release-script",
+  "version": "1.0.0-dev.1",
+  "description": "Release script automates your release process for projects using git.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jsone-studios/release-script.git"
+    "url": "https://github.com/jsone-studios/release-script.git"
+  },
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com/"
   },
   "author": "jsone-studios",
   "license": "MIT",
