@@ -1,6 +1,7 @@
 # Release script
 
 ![Build](https://github.com/jsone-studios/release-script/workflows/Build/badge.svg)
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/jsone-studios/release-script)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=jsone-studios/release-script)](https://dependabot.com)
 [![GitHub](https://img.shields.io/github/license/jsone-studios/release-script)](https://github.com/jsone-studios/release-script/blob/master/LICENSE)
 
