@@ -39,7 +39,7 @@
     "@types/node": "12.12.31",
     "@types/command-line-args": "5.0.0",
     "@types/command-line-usage": "5.0.1",
-    "@types/jest": "25.1.4",
+    "@types/jest": "25.1.5",
     "@types/mkdirp": "1.0.0",
     "@types/rimraf": "3.0.0",
     "@types/semver": "7.1.0",
