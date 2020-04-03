@@ -4,9 +4,8 @@ import path from 'path';
 import commandLineArgs from 'command-line-args';
 import commandLineUsage from 'command-line-usage';
 
-import {ReleaseConfigOptions} from '../declarations/ReleaseConfigOptions';
-
-import {ReleaseScript} from './release-script';
+import {release} from './release-script';
+import {ReleaseConfigOptions} from './types';
 
 const DEFAULT_RELEASE_CONFIG_FILE = 'release.config.js';
 
@@ -75,8 +74,7 @@ function main(): void {
             return;
         }
 
-        const releaseScript = new ReleaseScript(releaseConfig);
-        releaseScript.release(options.release, '.')
+        release(options.release, releaseConfig)
             .catch(error => console.log(error));
     }
 }

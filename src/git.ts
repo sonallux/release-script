@@ -1,16 +1,14 @@
 // eslint-disable-next-line import/default
-import simplegit from 'simple-git/promise';
-import {DefaultLogFields} from 'simple-git/typings/response';
+import simplegit, {SimpleGit} from 'simple-git/promise';
+import {CommitSummary, DefaultLogFields, StatusResult} from 'simple-git/typings/response';
 
-export class Git {
+import {Git} from './types';
 
-    constructor(private git: simplegit.SimpleGit) {}
+export class GitImpl implements Git {
 
-    static openRepo(path: string): Git {
-        return new Git(simplegit(path));
-    }
+    constructor(private git: SimpleGit) {}
 
-    status(): Promise<simplegit.StatusResult> {
+    status(): Promise<StatusResult> {
         return this.git.status();
     }
 
@@ -37,7 +35,7 @@ export class Git {
         return;
     }
 
-    commit(message: string, files?: string|string[]): Promise<simplegit.CommitSummary> {
+    commit(message: string, files?: string|string[]): Promise<CommitSummary> {
         return this.git.commit(message, files);
     }
 
@@ -57,7 +55,11 @@ export class Git {
         return this.git.push(undefined, undefined, {'--follow-tags': null});
     }
 
-    get simpleGit(): simplegit.SimpleGit {
+    get simpleGit(): SimpleGit {
         return this.git;
     }
+}
+
+export function openRepo(path: string): Git {
+    return new GitImpl(simplegit(path));
 }

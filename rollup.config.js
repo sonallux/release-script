@@ -1,5 +1,4 @@
 import commonjs from '@rollup/plugin-commonjs';
-import json from '@rollup/plugin-json';
 import multiEntry from '@rollup/plugin-multi-entry';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
@@ -7,7 +6,6 @@ import typescript from '@rollup/plugin-typescript';
 const external = ['buffer', 'child_process', 'fs', 'os', 'path', 'tty', 'util'];
 
 const plugins = [
-    json(),
     nodeResolve(),
     commonjs({ include: 'node_modules/**' }),
     typescript(),

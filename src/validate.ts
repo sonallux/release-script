@@ -1,30 +1,42 @@
-import Ajv from 'ajv';
-import ajvKeywords from 'ajv-keywords';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {ReleaseConfigOptions} from './types';
 
-import {ReleaseConfigOptions} from '../declarations/ReleaseConfigOptions';
-
-import releaseConfigSchema from './schemas/ReleaseConfigOptions.json';
-
-const ajv = new Ajv({
-    allErrors: true,
-});
-
-ajvKeywords(ajv, [
-    'typeof',
-]);
-
-export function validate(releaseConfig: ReleaseConfigOptions): void {
-    const compiledSchema = ajv.compile(releaseConfigSchema);
-    const valid = compiledSchema(releaseConfig);
-    if (valid || !compiledSchema.errors) {
-        return;
+function isArrayOfFunctions(functions: any): boolean {
+    if (functions instanceof Array) {
+        return functions.every(f => typeof f === 'function');
     }
+    return false;
+}
 
-    const errors = [];
-    for (const error of compiledSchema.errors) {
-        errors.push(`- ReleaseConfig${error.dataPath} ${error.message}`);
+function isOfType(object: any, ...types: string[]): boolean {
+    const objectType = typeof object;
+    for (const type of types) {
+        if (objectType === type) {
+            return true;
+        }
     }
-    throw Error('Invalid configuration object. '
-        + 'ReleaseScript has been initialised using a configuration object that does not match the API schema.\n'
-        + `${errors.join('\n')}\n`);
+    return false;
+}
+
+export function validateConfig(releaseConfig: any): releaseConfig is ReleaseConfigOptions {
+    if ('preconditions' in releaseConfig && !isArrayOfFunctions(releaseConfig.preconditions)) {
+        return false;
+    }
+    if ('versionHook' in releaseConfig && !isArrayOfFunctions(releaseConfig.versionHook)) {
+        return false;
+    }
+    if ('releaseHook' in releaseConfig && !isArrayOfFunctions(releaseConfig.releaseHook)) {
+        return false;
+    }
+    if ('nextDevelopmentVersion' in releaseConfig 
+        && !isOfType(releaseConfig.nextDevelopmentVersion, 'string', 'boolean')) {
+        return false;
+    }
+    if ('push' in releaseConfig && !isOfType(releaseConfig.push, 'boolean')) {
+        return false;
+    }
+    if ('tag' in releaseConfig && !isOfType(releaseConfig.tag, 'string', 'boolean')) {
+        return false;
+    }
+    return true;
 }

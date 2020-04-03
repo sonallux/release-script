@@ -1,10 +1,8 @@
 import SemVer from 'semver/classes/semver';
 
-import {ReleaseConfigOptions} from '../declarations/ReleaseConfigOptions';
+import {Git, ReleaseConfigOptions, ReleaseContext} from './types';
 
-import {Git} from './git';
-
-export class ReleaseContext {
+export class ReleaseContextImpl implements ReleaseContext {
 
     constructor(
         public directory: string,
@@ -39,6 +37,6 @@ export class ReleaseContext {
             ? undefined
             : this.config.nextDevelopmentVersion;
         const nextVersion = new SemVer(this.version.version).inc('prerelease', id);
-        return new ReleaseContext(this.directory, nextVersion, this.config, this.git, true);
+        return new ReleaseContextImpl(this.directory, nextVersion, this.config, this.git, true);
     }
 }

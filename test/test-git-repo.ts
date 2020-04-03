@@ -5,7 +5,7 @@ import rimraf from 'rimraf';
 import mkdirp from 'mkdirp';
 import simplegit from 'simple-git/promise';
 
-import {Git} from '../src/git';
+import {GitImpl} from '../src/git';
 
 const DEFAULT_REPO_FOLDER = './test-temp';
 
@@ -26,7 +26,7 @@ export function createTestDirectory(name: string): string {
 export class TestGitRepo {
 
     private _directory: string;
-    private _git: Git;
+    private _git: GitImpl;
 
     constructor(name: string) {
         this._directory = createTestDirectory(name);
@@ -34,10 +34,10 @@ export class TestGitRepo {
         simpleGit.init();
         simpleGit.addConfig('user.name', 'Test Executor');
         simpleGit.addConfig('user.email', 'test@test.com');
-        this._git = new Git(simpleGit);
+        this._git = new GitImpl(simpleGit);
     }
 
-    get git(): Git {
+    get git(): GitImpl {
         return this._git;
     }
 
