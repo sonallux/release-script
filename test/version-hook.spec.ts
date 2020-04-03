@@ -1,9 +1,8 @@
 import {writeFileSync} from 'fs';
 import path from 'path';
 
-import {ReleaseScript} from '../src/release-script';
-import {ReleaseContext} from '../src/release-context';
-import {VersionFunction} from '../declarations/ReleaseConfigOptions';
+import {release} from '../src/release-script';
+import {ReleaseContext, VersionFunction} from '../src/types';
 
 import {TestGitRepo} from './test-git-repo';
 
@@ -17,13 +16,9 @@ beforeEach(() => {
 
 async function executeReleaseScriptFailure(versionHook: VersionFunction[], newVersion: string):
     Promise<Error> {
-    const releaseScript = new ReleaseScript({
-        versionHook,
-        push: false,
-    });
 
     try {
-        await releaseScript.release(newVersion, repo.directory);
+        await release(newVersion, {versionHook, push: false}, repo.directory);
     }
     catch (error) {
         expect((await repo.git.tags()).length).toBe(0);
@@ -36,12 +31,12 @@ describe('Version Hook', () => {
     it('should create next development version without prerelease id', async () => {
         const pluginMock = jest.fn<Promise<void>, [ReleaseContext]>(() => Promise.resolve());
 
-        const releaseScript = new ReleaseScript({
+        const config = {
             versionHook: [pluginMock],
             push: false,
-        });
+        };
 
-        await releaseScript.release('1.0.0', repo.directory);
+        await release('1.0.0', config, repo.directory);
         expect(await repo.git.tags()).toContain('v1.0.0');
         expect(pluginMock).toHaveBeenCalledTimes(2);
         expect(pluginMock.mock.calls[0][0].isNextDevelopmentVersion).toBe(false);
@@ -55,13 +50,13 @@ describe('Version Hook', () => {
     it('should create next development version with prerelease id', async () => {
         const pluginMock = jest.fn<Promise<void>, [ReleaseContext]>(() => Promise.resolve());
 
-        const releaseScript = new ReleaseScript({
+        const config = {
             versionHook: [pluginMock],
             nextDevelopmentVersion: 'dev',
             push: false,
-        });
+        };
 
-        await releaseScript.release('1.0.0', repo.directory);
+        await release('1.0.0', config, repo.directory);
         expect(await repo.git.tags()).toContain('v1.0.0');
         expect(pluginMock).toHaveBeenCalledTimes(2);
         expect(pluginMock.mock.calls[0][0].isNextDevelopmentVersion).toBe(false);
@@ -75,13 +70,13 @@ describe('Version Hook', () => {
     it('should be called only once', async () => {
         const pluginMock = jest.fn<Promise<void>, [ReleaseContext]>(() => Promise.resolve());
 
-        const releaseScript = new ReleaseScript({
+        const config = {
             versionHook: [pluginMock],
             nextDevelopmentVersion: false,
             push: false,
-        });
+        };
 
-        await releaseScript.release('1.0.0', repo.directory);
+        await release('1.0.0', config, repo.directory);
         expect(await repo.git.tags()).toContain('v1.0.0');
         expect(pluginMock).toHaveBeenCalledTimes(1);
         expect(pluginMock.mock.calls[0][0].isNextDevelopmentVersion).toBe(false);

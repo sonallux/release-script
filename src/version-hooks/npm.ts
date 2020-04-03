@@ -1,7 +1,6 @@
 import {ExecOptions} from 'child_process';
 
-import {VersionFunction} from '../../declarations/ReleaseConfigOptions';
-import {ReleaseContext} from '../release-context';
+import {ReleaseContext, VersionFunction} from '../types';
 
 import {Command} from './command';
 

@@ -1,4 +1,4 @@
-import {ReleaseContext} from './release-context';
+import {ReleaseContext} from './types';
 
 export async function executeVersionHooks(context: ReleaseContext): Promise<void> {
     if (!context.config.versionHook) {
