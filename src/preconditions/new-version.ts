@@ -1,7 +1,6 @@
 import semverCoerce from 'semver/functions/coerce';
 
-import {PreconditionFunction} from '../../declarations/ReleaseConfigOptions';
-import {ReleaseContext} from '../release-context';
+import {PreconditionFunction, ReleaseContext} from '../types';
 
 export function NewVersion(): PreconditionFunction {
 
@@ -10,9 +9,8 @@ export function NewVersion(): PreconditionFunction {
     }
 
     async function precondition(context: ReleaseContext): Promise<void> {
-        const tags = await context.git.simpleGit.tags();
-
-        const isNewVersion = tags.all
+        const tags = await context.git.tags();
+        const isNewVersion = tags
             .map(v => semverCoerce(v))
             .filter(notEmpty)
             .every(v => context.version.compare(v) !== 0);

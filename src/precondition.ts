@@ -1,4 +1,4 @@
-import {ReleaseContext} from './release-context';
+import {ReleaseContext} from './types';
 
 export async function checkPreconditions(context: ReleaseContext): Promise<void> {
     if (!context.config.preconditions) {

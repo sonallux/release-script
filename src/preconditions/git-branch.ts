@@ -1,5 +1,4 @@
-import {PreconditionFunction} from '../../declarations/ReleaseConfigOptions';
-import {ReleaseContext} from '../release-context';
+import {PreconditionFunction, ReleaseContext} from '../types';
 
 export function GitBranch(branchName: RegExp | string): PreconditionFunction {
     async function precondition(context: ReleaseContext): Promise<void> {

@@ -9,15 +9,12 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"pretty": true,
-    "resolveJsonModule": true,
 		"skipLibCheck": true,
 		"strict": true,
 		"target": "es2016"
   },
   "include": [
-    "src/**/*",
-    "declarations/**/*",
-    "types/**/*"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules"

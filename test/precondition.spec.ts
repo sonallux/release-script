@@ -1,9 +1,8 @@
 import {writeFileSync} from 'fs';
 import path from 'path';
 
-import {ReleaseScript} from '../src/release-script';
-import {ReleaseContext} from '../src/release-context';
-import {PreconditionFunction} from '../declarations/ReleaseConfigOptions';
+import {release} from '../src/release-script';
+import {PreconditionFunction, ReleaseContext} from '../src/types';
 
 import {TestGitRepo} from './test-git-repo';
 
@@ -17,25 +16,25 @@ beforeEach(() => {
 
 async function executeReleaseScriptSuccess(preconditions: PreconditionFunction[],
     newVersion: string): Promise<void> {
-    const releaseScript = new ReleaseScript({
+    const config = {
         preconditions,
         push: false,
-    });
+    };
 
-    await releaseScript.release(newVersion, repo.directory);
+    await release(newVersion, config, repo.directory);
     expect(await repo.git.tags()).toContain(`v${newVersion}`);
     return;
 }
 
 async function executeReleaseScriptFailure(preconditions: PreconditionFunction[],
     newVersion: string): Promise<Error> {
-    const releaseScript = new ReleaseScript({
+    const config = {
         preconditions,
         push: false,
-    });
+    };
 
     try {
-        await releaseScript.release(newVersion, repo.directory);
+        await release(newVersion, config, repo.directory);
     }
     catch (error) {
         expect((await repo.git.tags()).length).toBe(0);

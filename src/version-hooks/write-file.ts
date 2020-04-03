@@ -2,8 +2,7 @@ import {writeFile as writeFileCallback, WriteFileOptions} from 'fs';
 import {promisify} from 'util';
 import path from 'path';
 
-import {VersionFunction} from '../../declarations/ReleaseConfigOptions';
-import {ReleaseContext} from '../release-context';
+import {ReleaseContext, VersionFunction} from '../types';
 
 export function WriteFile(
     file: string,
