@@ -7,43 +7,27 @@ const external = ['buffer', 'child_process', 'fs', 'os', 'path', 'tty', 'util'];
 
 const plugins = [
     nodeResolve(),
-    commonjs({ include: 'node_modules/**' }),
+    commonjs({include: 'node_modules/**'}),
     typescript(),
 ]
 
 export default [
     {
-        input: 'src/release-script.ts',
+        input: ['src/release-script.ts', 'src/preconditions/index.ts', 'src/version-hooks/index.ts'],
         output: {
             file: 'dist/release-script.js',
             format: 'cjs',
         },
         external,
-        plugins,
+        plugins: [...plugins, multiEntry()],
     },
     {
         input: 'src/cli.ts',
         output: {
             file: 'dist/release-script-cli.js',
             format: 'cjs',
-        },
-        external,
-        plugins,
-    },
-    {
-        input: 'src/preconditions/index.ts',
-        output: {
-            file: 'dist/preconditions.js',
-            format: 'cjs',
-        },
-        external,
-        plugins,
-    },
-    {
-        input: 'src/version-hooks/index.ts',
-        output: {
-            file: 'dist/version-hooks.js',
-            format: 'cjs',
+            banner: '#!/usr/bin/env node',
+            footer: 'cli();',
         },
         external,
         plugins,
