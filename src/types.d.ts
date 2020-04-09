@@ -43,4 +43,4 @@ export interface ReleaseConfigOptions {
     tag?: boolean | string;
 }
 
-export function release(newVersionString: string, ReleaseConfigOptions?: config, directory?: string): Promise<void>;
+export function release(newVersionString: string, config?: ReleaseConfigOptions, directory?: string): Promise<void>;
