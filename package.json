@@ -1,6 +1,6 @@
 {
   "name": "@jsone-studios/release-script",
-  "version": "1.0.0-dev.2",
+  "version": "1.0.0-dev.4",
   "description": "Release script automates your release process for projects using git.",
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
   "main": "dist/release-script.js",
   "typings": "dist/release-script.d.ts",
   "bin": {
-    "release-script": "./dist/bin/release-script-cli.js"
+    "release-script": "./dist/release-script-cli.js"
   },
   "dependencies": {
     "command-line-args": "5.1.1",

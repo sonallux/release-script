@@ -27,7 +27,6 @@ const cliOptionDefinitions: commandLineUsage.OptionDefinition[] = [
         description: 'Path to the config file',
         alias: 'c',
         type: String,
-        defaultValue: DEFAULT_RELEASE_CONFIG_FILE,
     },
     {
         name: 'release',
@@ -49,17 +48,24 @@ const helpSections: commandLineUsage.Section[] = [
     },
 ];
 
-function getReleaseConfig(userReleaseConfigFile = DEFAULT_RELEASE_CONFIG_FILE): ReleaseConfigOptions|undefined {
-    const configFile = path.resolve(userReleaseConfigFile);
-    if (!fs.existsSync(configFile)) {
-        console.log(`No ${configFile} found!`);
-        return undefined;
+function getReleaseConfig(userReleaseConfigFile?: string): ReleaseConfigOptions {
+    let configFile: string;
+    if (userReleaseConfigFile === undefined ) {
+        configFile = path.resolve(DEFAULT_RELEASE_CONFIG_FILE);
+        if (!fs.existsSync(DEFAULT_RELEASE_CONFIG_FILE)) {
+            return {};
+        }
     }
-
-    return require(configFile.trim()) as ReleaseConfigOptions;
+    else {
+        configFile = path.resolve(userReleaseConfigFile);
+        if (!fs.existsSync(configFile)) {
+            throw new Error(`No ${userReleaseConfigFile} found!`);
+        }
+    }
+    return require(configFile) as ReleaseConfigOptions;
 }
 
-function main(): void {
+export function cli(config?: ReleaseConfigOptions): void {
     const options = commandLineArgs(cliOptionDefinitions);
 
     if (options.help) {
@@ -69,14 +75,11 @@ function main(): void {
         console.log('Current version unknown');
     }
     else {
-        const releaseConfig = getReleaseConfig(options.config);
-        if (releaseConfig === undefined) {
-            return;
+        if (config === undefined) {
+            config = getReleaseConfig(options.config);
         }
 
-        release(options.release, releaseConfig)
+        release(options.release, config)
             .catch(error => console.log(error));
     }
 }
-
-main();
