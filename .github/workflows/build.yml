@@ -30,4 +30,7 @@ jobs:
     - run: npm ci
     - run: npm run lint
     - run: npm run test
+    - uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
     - run: npm run build
