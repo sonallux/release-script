@@ -48,12 +48,12 @@ const helpSections: commandLineUsage.Section[] = [
     },
 ];
 
-function getReleaseConfig(userReleaseConfigFile?: string): ReleaseConfigOptions {
+function getReleaseConfig(userReleaseConfigFile?: string): ReleaseConfigOptions | undefined {
     let configFile: string;
     if (userReleaseConfigFile === undefined ) {
         configFile = path.resolve(DEFAULT_RELEASE_CONFIG_FILE);
         if (!fs.existsSync(DEFAULT_RELEASE_CONFIG_FILE)) {
-            return {};
+            return;
         }
     }
     else {
