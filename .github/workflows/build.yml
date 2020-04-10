@@ -33,5 +33,5 @@ jobs:
     - uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        flags: ${{ matrix.os }}, ${{ matrix.node-version }}
+        flags: ${{ matrix.os }}, node-${{ matrix.node-version }}
     - run: npm run build
