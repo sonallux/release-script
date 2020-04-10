@@ -1,6 +1,7 @@
 node_modules/
 
-declarations/
+test-temp/
+test-maven/
 dist/
 
 .eslintrc.js

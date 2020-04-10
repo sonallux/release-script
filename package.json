@@ -61,7 +61,7 @@
     "prebuild": "rimraf dist",
     "build": "rollup -c && shx cp src/types.d.ts dist/release-script.d.ts",
     "watch": "rollup -c --watch",
-    "test": "jest --coverage --maxWorkers=1"
+    "test": "jest --clearCache && jest --coverage --maxWorkers=2"
   },
   "files": [
     "dist/"
