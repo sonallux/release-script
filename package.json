@@ -21,9 +21,10 @@
     "release-script": "./dist/release-script-cli.js"
   },
   "dependencies": {
+    "@types/semver": "^7.0.0",
     "command-line-args": "5.1.1",
     "command-line-usage": "6.1.0",
-    "semver": "7.2.1",
+    "semver": "^7.0.0",
     "simple-git": "1.132.0"
   },
   "engines": {
@@ -40,7 +41,6 @@
     "@types/jest": "25.2.1",
     "@types/mkdirp": "1.0.0",
     "@types/rimraf": "3.0.0",
-    "@types/semver": "7.1.0",
     "@typescript-eslint/parser": "2.27.0",
     "@typescript-eslint/eslint-plugin": "2.27.0",
     "eslint": "6.8.0",
@@ -52,7 +52,7 @@
     "rimraf": "3.0.2",
     "rollup": "1.32.1",
     "shx": "0.3.2",
-    "ts-jest": "25.3.1",
+    "ts-jest": "25.3.0",
     "tslib": "1.11.1",
     "typescript": "3.8.3"
   },
@@ -61,7 +61,7 @@
     "prebuild": "rimraf dist",
     "build": "rollup -c && shx cp src/types.d.ts dist/release-script.d.ts",
     "watch": "rollup -c --watch",
-    "test": "jest --clearCache && jest --coverage --maxWorkers=2"
+    "test": "jest --coverage --maxWorkers=2"
   },
   "files": [
     "dist/"
