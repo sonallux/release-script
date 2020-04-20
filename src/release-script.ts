@@ -4,7 +4,7 @@ import semverParse from 'semver/functions/parse';
 
 import {ReleaseConfigOptions} from './types';
 import {openRepo} from './git';
-import {validateConfig} from './validate';
+import {ConfigValidator} from './validate';
 import {checkPreconditions} from './precondition';
 import {ReleaseContextImpl} from './release-context';
 import {executeReleaseHooks} from './release-hook';
@@ -13,9 +13,12 @@ import {executeVersionHooks} from './version-hook';
 export async function release(
     newVersionString: string, releaseConfig: ReleaseConfigOptions = {}, directory = '.'): Promise<void> {
 
-    if (!validateConfig(releaseConfig)) {
-        return Promise.reject(new Error('Invalid configuration object. '
-            + 'ReleaseScript has been initialised using a configuration object that does not match the API schema.'));
+    const configValidator = new ConfigValidator();
+
+    if (!configValidator.validate(releaseConfig)) {
+        const errors = configValidator.getErrors().map(error => `- ${error}`).join('\n');
+        return Promise.reject(new Error(
+            `Invalid configuration object.\n${errors}`));
     }
 
     const newVersion = semverParse(newVersionString);
