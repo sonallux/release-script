@@ -62,9 +62,10 @@ export class GitImpl implements Git {
     async tag(tagName: string, tagMessage?: string): Promise<void> {
         if (tagMessage) {
             await this.git.addAnnotatedTag(tagName, tagMessage);
-            return;
         }
-        await this.git.addTag(tagName);
+        else {
+            await this.git.addTag(tagName);
+        }
         return;
     }
 
