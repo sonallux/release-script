@@ -43,6 +43,9 @@ export class ConfigValidator {
         if ('tag' in releaseConfig && !isOfType(releaseConfig.tag, 'string', 'boolean')) {
             this.errors.push('config.tag must be a string or boolean');
         }
+        if ('gitSign' in releaseConfig && !isOfType(releaseConfig.gitSign, 'boolean')) {
+            this.errors.push('config.gitSign must be a boolean');
+        }
         return this.errors.length === 0;
     }
 
