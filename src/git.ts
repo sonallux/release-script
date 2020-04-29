@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/default
 import simplegit, {SimpleGit} from 'simple-git/promise';
-import {CommitSummary, DefaultLogFields, StatusResult} from 'simple-git/typings/response';
+import {DefaultLogFields, StatusResult} from 'simple-git/typings/response';
 
 import {Git} from './types';
 
@@ -26,24 +26,52 @@ export class GitImpl implements Git {
     }
 
     async addAndCommit(message: string): Promise<void> {
-        const status = await this.status();
-        if (status.isClean()) {
-            return;
-        }
-        await this.git.add('.');
+        await this.add();
         await this.commit(message);
         return;
     }
 
-    commit(message: string, files?: string|string[]): Promise<CommitSummary> {
-        return this.git.commit(message, files);
+    async add(files?: string|string[]): Promise<void> {
+        if (files) {
+            await this.git.add(files);
+        } 
+        else {
+            await this.git.add('.');
+        }
+        return;
+    }
+
+    async commit(message: string, files?: string|string[]): Promise<void> {
+        const status = await this.status();
+        if (status.isClean()) {
+            return;
+        }
+        await this.git.commit(message, files);
+        return;
+    }
+
+    async signedCommit(message: string, files?: string|string[]): Promise<void> {
+        const status = await this.status();
+        if (status.isClean()) {
+            return;
+        }
+        await this.git.commit(message, files, {'-S': null});
+        return;
     }
 
     async tag(tagName: string, tagMessage?: string): Promise<void> {
         if (tagMessage) {
-            return this.git.addAnnotatedTag(tagName, tagMessage);
+            await this.git.addAnnotatedTag(tagName, tagMessage);
         }
-        await this.git.addTag(tagName);
+        else {
+            await this.git.addTag(tagName);
+        }
+        return;
+    }
+
+    async signedTag(tagName: string, tagMessage: string): Promise<void> {
+        await this.git.raw(['tag', '-s', '-m', tagMessage, tagName]);
+        return;
     }
 
     async getLatestCommit(): Promise<DefaultLogFields> {

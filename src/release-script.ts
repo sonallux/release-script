@@ -33,14 +33,14 @@ export async function release(
 
     await checkPreconditions(context);
     await executeVersionHooks(context);
-    await context.git.addAndCommit(`Release version ${context.version} [CI SKIP]`);
+    await context.doGitCommit(`Release version ${context.version} [CI SKIP]`);
     await context.doGitTag();
     await executeReleaseHooks(context);
 
     const nextContext = context.getNextContext();
     if (nextContext !== null) {
         await executeVersionHooks(nextContext);
-        await nextContext.git.addAndCommit('Prepare next release [CI SKIP]');
+        await nextContext.doGitCommit('Prepare next release [CI SKIP]');
     }
 
     await context.doGitPush();

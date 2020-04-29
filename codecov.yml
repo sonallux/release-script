@@ -1,0 +1,9 @@
+coverage:
+  status:
+    project:
+      default:
+        target: 90%
+    patch: off
+comment:
+  layout: "diff, files"
+  after_n_builds: 9

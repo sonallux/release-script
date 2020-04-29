@@ -76,7 +76,6 @@ describe('validateConfig', () => {
         expect(expectInValidConfig({push: 'test'}))
             .toEqual(['config.push must be a boolean']);
         expectValidConfig({push: true});
-        
     });
 
     it('should check tag', () => {
@@ -88,6 +87,18 @@ describe('validateConfig', () => {
             .toEqual(['config.tag must be a string or boolean']);
         expectValidConfig({tag: true});
         expectValidConfig({tag: 'test'});
+    });
+
+    it('should check gitSign', () => {
+        expect(expectInValidConfig({gitSign: 123}))
+            .toEqual(['config.gitSign must be a boolean']);
+        expect(expectInValidConfig({gitSign: []}))
+            .toEqual(['config.gitSign must be a boolean']);
+        expect(expectInValidConfig({gitSign: voidFunction}))
+            .toEqual(['config.gitSign must be a boolean']);
+        expect(expectInValidConfig({gitSign: 'test'}))
+            .toEqual(['config.gitSign must be a boolean']);
+        expectValidConfig({gitSign: true});
     });
 
     it('should return multiple errors', () => {
