@@ -19,7 +19,12 @@ export class ReleaseContextImpl implements ReleaseContext {
         const tagPrefix = this.config.tag === true || this.config.tag === undefined ? 'v' : this.config.tag;
         const tagName = `${tagPrefix}${this.version.version}`;
         console.log(`Creating git tag: ${tagName}`);
-        return this.git.tag(tagName, `Release ${this.version.version}`);
+        if (this.config.gitSign === true) {
+            return this.git.signedTag(tagName, `Release ${this.version.version}`);
+        }
+        else {
+            return this.git.tag(tagName, `Release ${this.version.version}`);
+        }
     }
 
     doGitPush(): Promise<void> {
@@ -29,7 +34,17 @@ export class ReleaseContextImpl implements ReleaseContext {
         return this.git.push();
     }
 
-    getNextContext(): ReleaseContext | null {
+    async doGitCommit(message: string): Promise<void> {
+        await this.git.add();
+        if (this.config.gitSign === true) {
+            return this.git.signedCommit(message);
+        }
+        else {
+            return this.git.commit(message);
+        }
+    }
+
+    getNextContext(): ReleaseContextImpl | null {
         if (this.config.nextDevelopmentVersion === false) {
             return null;
         }

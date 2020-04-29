@@ -1,8 +1,7 @@
-import {existsSync, readdirSync} from 'fs';
+import {existsSync, readdirSync, mkdirSync} from 'fs';
 import path from 'path';
 
 import rimraf from 'rimraf';
-import mkdirp from 'mkdirp';
 import simplegit from 'simple-git/promise';
 
 import {GitImpl} from '../src/git';
@@ -18,7 +17,7 @@ export function createTestDirectory(name: string): string {
         }
     }
     else {
-        mkdirp.sync(directory);
+        mkdirSync(directory, {recursive: true});
     }
     return directory;
 }
