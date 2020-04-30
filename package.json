@@ -1,6 +1,6 @@
 {
   "name": "@jsone-studios/release-script",
-  "version": "1.0.0-dev.4",
+  "version": "1.0.0-dev.5",
   "description": "Release script automates your release process for projects using git.",
   "repository": {
     "type": "git",
