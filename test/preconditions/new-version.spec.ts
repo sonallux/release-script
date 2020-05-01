@@ -20,6 +20,7 @@ beforeEach(() => {
 
 describe('NewVersion', () => {
     it('should work on unreleased version', async () => {
+        await context.git.tag('v0.0.1', 'Release 1.0.0');
         await context.git.tag('v1.0.0', 'Release 1.0.0');
 
         const precondition = NewVersion();

@@ -5,7 +5,7 @@ import commandLineArgs from 'command-line-args';
 import commandLineUsage from 'command-line-usage';
 
 import {release} from './release-script';
-import {ReleaseConfigOptions} from './types';
+import type {ReleaseConfigOptions} from './types';
 
 const DEFAULT_RELEASE_CONFIG_FILE = 'release.config.js';
 

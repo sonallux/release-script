@@ -1,4 +1,4 @@
-import type {SemVer} from 'semver/classes/semver';
+import SemVer from 'semver/classes/semver';
 import {DefaultLogFields, StatusResult} from 'simple-git/typings/response';
 
 export interface Git {

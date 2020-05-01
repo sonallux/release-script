@@ -1,6 +1,6 @@
 import SemVer from 'semver/classes/semver';
 
-import {Git, ReleaseConfigOptions, ReleaseContext} from './types';
+import type {Git, ReleaseConfigOptions, ReleaseContext} from './types';
 
 export class ReleaseContextImpl implements ReleaseContext {
 

@@ -1,6 +1,6 @@
 import semverCoerce from 'semver/functions/coerce';
 
-import {PreconditionFunction, ReleaseContext} from '../types';
+import type {PreconditionFunction, ReleaseContext} from '../types';
 
 export function NewVersion(): PreconditionFunction {
 

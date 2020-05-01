@@ -2,7 +2,7 @@ import {writeFile as writeFileCallback, readFile as readFileCallback} from 'fs';
 import {promisify} from 'util';
 import path from 'path';
 
-import {ReleaseContext, VersionFunction} from '../types';
+import type {ReleaseContext, VersionFunction} from '../types';
 
 function defaultReleaseHeader(context: ReleaseContext): Promise<string> {
     return Promise.resolve(`## [${context.version.version}]`);

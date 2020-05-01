@@ -2,7 +2,7 @@ import {writeFileSync} from 'fs';
 import path from 'path';
 
 import {release} from '../src/release-script';
-import {ReleaseContext, VersionFunction} from '../src/types';
+import type {ReleaseContext, VersionFunction} from '../src/types';
 
 import {TestGitRepo} from './test-git-repo';
 
