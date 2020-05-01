@@ -1,7 +1,7 @@
 import {ExecOptions} from 'child_process';
 import path from 'path';
 
-import {ReleaseContext, VersionFunction} from '../types';
+import type {ReleaseContext, VersionFunction} from '../types';
 
 import {Command} from './command';
 

@@ -2,7 +2,7 @@ import path from 'path';
 
 import semverParse from 'semver/functions/parse';
 
-import {ReleaseConfigOptions} from './types';
+import type {ReleaseConfigOptions} from './types';
 import {openRepo} from './git';
 import {ConfigValidator} from './validate';
 import {checkPreconditions} from './precondition';

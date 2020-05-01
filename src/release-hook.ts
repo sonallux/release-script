@@ -1,4 +1,4 @@
-import {ReleaseContext} from './types';
+import type {ReleaseContext} from './types';
 
 export async function executeReleaseHooks(context: ReleaseContext): Promise<void> {
     if (!context.config.releaseHook) {

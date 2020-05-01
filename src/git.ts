@@ -1,8 +1,8 @@
 // eslint-disable-next-line import/default
 import simplegit, {SimpleGit} from 'simple-git/promise';
-import {DefaultLogFields, StatusResult} from 'simple-git/typings/response';
+import type {DefaultLogFields, StatusResult} from 'simple-git/typings/response';
 
-import {Git} from './types';
+import type {Git} from './types';
 
 export class GitImpl implements Git {
 

@@ -1,7 +1,7 @@
 import {exec as execCallback, ExecOptions} from 'child_process';
 import {promisify} from 'util';
 
-import {ReleaseContext, VersionFunction} from '../types';
+import type {ReleaseContext, VersionFunction} from '../types';
 
 export function Command(
     cmdString: string | ((context: ReleaseContext) => string),

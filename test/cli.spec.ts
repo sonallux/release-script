@@ -3,7 +3,7 @@ import path from 'path';
 
 import * as releaseModule from '../src/release-script';
 import {cli} from '../src/cli';
-import {ReleaseConfigOptions} from '../src/types';
+import type {ReleaseConfigOptions} from '../src/types';
 
 import {createTestDirectory} from './test-git-repo';
 

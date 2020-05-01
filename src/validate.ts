@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {ReleaseConfigOptions} from './types';
+import type {ReleaseConfigOptions} from './types';
 
 function isArrayOfFunctions(functions: any): boolean {
     if (functions instanceof Array) {

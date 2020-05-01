@@ -1,4 +1,4 @@
-import {PreconditionFunction, ReleaseContext} from '../types';
+import type {PreconditionFunction, ReleaseContext} from '../types';
 
 export function CleanWorkingTree(): PreconditionFunction {
     async function precondition(context: ReleaseContext): Promise<void> {
