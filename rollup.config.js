@@ -5,12 +5,6 @@ import typescript from '@rollup/plugin-typescript';
 
 const external = ['buffer', 'child_process', 'fs', 'os', 'path', 'tty', 'util'];
 
-const plugins = [
-    nodeResolve(),
-    commonjs({include: 'node_modules/**'}),
-    typescript(),
-]
-
 export default [
     {
         input: ['src/release-script.ts', 'src/preconditions/index.ts', 'src/version-hooks/index.ts'],
@@ -19,7 +13,7 @@ export default [
             format: 'cjs',
         },
         external,
-        plugins: [...plugins, multiEntry()],
+        plugins: [typescript(), multiEntry()],
     },
     {
         input: 'src/cli.ts',
@@ -30,7 +24,7 @@ export default [
             footer: 'cli();',
         },
         external,
-        plugins,
+        plugins: [typescript()],
     },
     {
         input: ['src/cli.ts', 'src/preconditions/index.ts', 'src/version-hooks/index.ts'],
@@ -39,6 +33,11 @@ export default [
             format: 'cjs',
         },
         external,
-        plugins: [...plugins, multiEntry()],
+        plugins: [
+            nodeResolve(),
+            commonjs({include: 'node_modules/**'}),
+            typescript(),
+            multiEntry(),
+        ],
     }
 ];
