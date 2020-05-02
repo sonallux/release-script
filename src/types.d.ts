@@ -1,3 +1,6 @@
+import {ExecOptions} from 'child_process';
+import {WriteFileOptions} from 'fs';
+
 import SemVer from 'semver/classes/semver';
 import {DefaultLogFields, StatusResult} from 'simple-git/typings/response';
 
@@ -143,3 +146,23 @@ export interface ReleaseConfigOptions {
 }
 
 export function release(newVersionString: string, config?: ReleaseConfigOptions, directory?: string): Promise<void>;
+
+//Preconditions
+export function CleanWorkingTree(): PreconditionFunction
+export function GitBranch(branchName: RegExp | string): PreconditionFunction;
+export function NewVersion(): PreconditionFunction;
+
+//Hooks
+export function Changelog(
+    file: string, 
+    releaseHeader?: (context: ReleaseContext) => Promise<string>, 
+    fileEncoding?: string): VersionFunction;
+export function Command(
+    cmdString: string | ((context: ReleaseContext) => string), 
+    options?: ExecOptions): VersionFunction|ReleaseFunction;
+export function MavenPom(options?: ExecOptions): VersionFunction;
+export function NpmPackage(options?: ExecOptions): VersionFunction;
+export function WriteFile(
+    file: string,
+    content?: (context: ReleaseContext) => string,
+    writeFileOptions?: WriteFileOptions): VersionFunction
