@@ -1,12 +1,12 @@
 import {exec as execCallback, ExecOptions} from 'child_process';
 import {promisify} from 'util';
 
-import type {ReleaseContext, VersionFunction} from '../types';
+import type {ReleaseContext, VersionFunction, ReleaseFunction} from '../types';
 
 export function Command(
     cmdString: string | ((context: ReleaseContext) => string),
     options?: ExecOptions,
-): VersionFunction {
+): VersionFunction|ReleaseFunction {
     const exec = promisify(execCallback);
 
     async function pluginFunction(context: ReleaseContext): Promise<void> {

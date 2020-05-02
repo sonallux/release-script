@@ -31,9 +31,9 @@ The release script can be customized by the following hooks
 <a name="precondition-hook"></a>
 - Precondition: Checks that must be valid before performing a release.
 <a name="version-update-hook"></a>
-- Version update hook: Update the version (e.g. change version field in package.json)
+- Version update hook: Update to the new version (e.g. change version field in package.json)
 <a name="release-hook"></a>
-- Release hook: Perform the actual release (e.g. publish package to npm)
+- Release hook: Perform the actual release (e.g. publish package to npm). This hook should not change any files, use the version update hook instead.
 
 Every hook is a function which gets the current [ReleaseContext](#release-context) as the only argument and should return a Promise, that resolves for a successfull execution and rejects for an error. Errors will cause release script to terminate without any special error handling or reverting changes. Therefore extra care must be taken by the user if release script terminates with an error.
 
