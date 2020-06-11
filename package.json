@@ -40,8 +40,8 @@
     "@types/jest": "25.2.1",
     "@types/node": "12.12.37",
     "@types/rimraf": "3.0.0",
-    "@typescript-eslint/eslint-plugin": "2.31.0",
-    "@typescript-eslint/parser": "2.31.0",
+    "@typescript-eslint/eslint-plugin": "2.34.0",
+    "@typescript-eslint/parser": "2.34.0",
     "eslint": "6.8.0",
     "eslint-plugin-import": "2.20.2",
     "eslint-plugin-json": "2.1.1",
@@ -51,8 +51,8 @@
     "rollup": "2.7.6",
     "shx": "0.3.2",
     "ts-jest": "25.5.1",
-    "tslib": "1.11.1",
-    "typescript": "3.8.3"
+    "tslib": "2.0.0",
+    "typescript": "3.9.5"
   },
   "scripts": {
     "lint": "eslint . --ext .js,.ts,.json --cache",
