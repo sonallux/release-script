@@ -52,7 +52,7 @@
     "shx": "0.3.2",
     "ts-jest": "25.5.1",
     "tslib": "1.11.1",
-    "typescript": "3.8.3"
+    "typescript": "3.9.5"
   },
   "scripts": {
     "lint": "eslint . --ext .js,.ts,.json --cache",
