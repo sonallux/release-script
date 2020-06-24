@@ -2,7 +2,7 @@ import {ExecOptions} from 'child_process';
 import {WriteFileOptions} from 'fs';
 
 import SemVer from 'semver/classes/semver';
-import {DefaultLogFields, StatusResult} from 'simple-git/typings/response';
+import {DefaultLogFields, StatusResult} from 'simple-git';
 
 export interface Git {
     /**
