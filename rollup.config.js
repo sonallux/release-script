@@ -3,7 +3,15 @@ import multiEntry from '@rollup/plugin-multi-entry';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 
-const external = ['buffer', 'child_process', 'fs', 'os', 'path', 'tty', 'util'];
+const nodeExternals = ['buffer', 'child_process', 'fs', 'os', 'path', 'tty', 'util'];
+const myExternals = [
+    'command-line-args',
+    'command-line-usage',
+    'semver/classes/semver',
+    'semver/functions/parse', 
+    'semver/functions/coerce',
+    'simple-git',
+]
 
 export default [
     {
@@ -12,7 +20,7 @@ export default [
             file: 'dist/release-script.js',
             format: 'cjs',
         },
-        external,
+        external: [...nodeExternals, ...myExternals],
         plugins: [typescript(), multiEntry()],
     },
     {
@@ -23,7 +31,7 @@ export default [
             banner: '#!/usr/bin/env node',
             footer: 'cli();',
         },
-        external,
+        external: [...nodeExternals, ...myExternals],
         plugins: [typescript()],
     },
     {
@@ -32,7 +40,7 @@ export default [
             file: 'dist/release-script-standalone.js',
             format: 'cjs',
         },
-        external,
+        external: [...nodeExternals],
         plugins: [
             nodeResolve(),
             commonjs({include: 'node_modules/**'}),
