@@ -1,6 +1,5 @@
 // eslint-disable-next-line import/default
-import simplegit, {SimpleGit} from 'simple-git/promise';
-import type {DefaultLogFields, StatusResult} from 'simple-git/typings/response';
+import simplegit, {SimpleGit, DefaultLogFields, StatusResult} from 'simple-git';
 
 import type {Git} from './types';
 
@@ -62,7 +61,7 @@ export class GitImpl implements Git {
     async tag(tagName: string, tagMessage?: string): Promise<void> {
         if (tagMessage) {
             await this.git.addAnnotatedTag(tagName, tagMessage);
-        }
+        } 
         else {
             await this.git.addTag(tagName);
         }
