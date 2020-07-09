@@ -24,16 +24,19 @@ export function createTestDirectory(name: string): string {
 
 export class TestGitRepo {
 
-    private _directory: string;
-    private _git: GitImpl;
+    constructor(
+        private _directory: string,
+        private _git: GitImpl,
+    ) {}
 
-    constructor(name: string) {
-        this._directory = createTestDirectory(name);
-        const simpleGit = simplegit(this._directory);
-        simpleGit.init();
-        simpleGit.addConfig('user.name', 'Test Executor');
-        simpleGit.addConfig('user.email', 'test@test.com');
-        this._git = new GitImpl(simpleGit);
+    static async create(name: string): Promise<TestGitRepo> {
+        const directory = createTestDirectory(name);
+        const simpleGit = simplegit(directory);
+        await simpleGit.init();
+        await simpleGit.addConfig('user.name', 'Test Executor');
+        await simpleGit.addConfig('user.email', 'test@test.com');
+        const gitImpl = new GitImpl(simpleGit);
+        return new TestGitRepo(directory, gitImpl);
     }
 
     get git(): GitImpl {
