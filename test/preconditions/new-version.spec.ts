@@ -11,8 +11,8 @@ let repo: TestGitRepo;
 // eslint-disable-next-line
 const context: any = {};
 
-beforeEach(() => {
-    repo = new TestGitRepo('TestPreconditionNewVersion');
+beforeEach(async() => {
+    repo = await TestGitRepo.create('TestPreconditionNewVersion');
     context.git = repo.git;
     writeFileSync(path.resolve(repo.directory, 'test.txt'), 'This is a test file!');
     return repo.git.addAndCommit('Initial commit');

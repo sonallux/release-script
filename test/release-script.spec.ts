@@ -8,8 +8,8 @@ import {TestGitRepo} from './test-git-repo';
 
 let repo: TestGitRepo;
 
-beforeEach(() => {
-    repo = new TestGitRepo('TestReleaseScript');
+beforeEach(async () => {
+    repo = await TestGitRepo.create('TestReleaseScript');
     writeFileSync(path.resolve(repo.directory, 'test.txt'), 'This is a test file!');
     return repo.git.addAndCommit('Initial commit');
 });
