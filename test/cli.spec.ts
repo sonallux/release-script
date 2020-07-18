@@ -5,7 +5,7 @@ import * as releaseModule from '../src/release-script';
 import {cli} from '../src/cli';
 import type {ReleaseConfigOptions} from '../src/types';
 
-import {createTestDirectory} from './test-git-repo';
+import {createTestDirectory} from './test-utils';
 
 jest.mock('../src/release-script');
 

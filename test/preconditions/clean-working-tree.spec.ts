@@ -2,7 +2,7 @@ import {writeFileSync} from 'fs';
 import path from 'path';
 
 import {CleanWorkingTree} from '../../src/preconditions';
-import {TestGitRepo} from '../test-git-repo';
+import {TestGitRepo} from '../test-utils';
 
 let repo: TestGitRepo;
 

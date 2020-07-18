@@ -29,6 +29,7 @@ module.exports =  {
         "no-new": "error",
         "no-new-object": "error",
         "no-new-wrappers": "error",
+        "no-restricted-imports": ["error", "semver"],
         "no-shadow": "error",
         "no-tabs": "error",
         "no-useless-rename": "error",

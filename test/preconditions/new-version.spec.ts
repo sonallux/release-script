@@ -1,10 +1,10 @@
 import {writeFileSync} from 'fs';
 import path from 'path';
 
-import semverParse from 'semver/functions/parse';
+import SemVer from 'semver/classes/semver';
 
 import {NewVersion} from '../../src/preconditions';
-import {TestGitRepo} from '../test-git-repo';
+import {TestGitRepo} from '../test-utils';
 
 let repo: TestGitRepo;
 
@@ -19,7 +19,7 @@ describe('NewVersion', () => {
         await repo.git.tag('v0.0.1', 'Release 1.0.0');
         await repo.git.tag('v1.0.0', 'Release 1.0.0');
 
-        const context = repo.context(semverParse('1.0.1'));
+        const context = repo.context(new SemVer('1.0.1'));
 
         const precondition = NewVersion();
         return expect(precondition(context)).resolves.toBe(undefined);
@@ -28,7 +28,7 @@ describe('NewVersion', () => {
     it('should not work on released version', async () => {
         await repo.git.tag('v1.0.0', 'Release 1.0.0');
 
-        const context = repo.context(semverParse('1.0.0'));
+        const context = repo.context(new SemVer('1.0.0'));
 
         const precondition = NewVersion();
         return expect(precondition(context))

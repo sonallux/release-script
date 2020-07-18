@@ -4,7 +4,7 @@ import path from 'path';
 import {release} from '../src/release-script';
 import type {ReleaseContext, VersionFunction} from '../src/types';
 
-import {TestGitRepo} from './test-git-repo';
+import {TestGitRepo} from './test-utils';
 
 let repo: TestGitRepo;
 
