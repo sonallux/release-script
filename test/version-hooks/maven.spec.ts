@@ -4,9 +4,15 @@ import path from 'path';
 import semverParse from 'semver/functions/parse';
 
 import {MavenPom} from '../../src/version-hooks';
+import {ReleaseContext} from '../../src/types';
 
-// eslint-disable-next-line
-const context: any = {};
+const context: ReleaseContext = {
+    version: undefined,
+    directory: undefined,
+    config: undefined,
+    git: undefined,
+    isNextDevelopmentVersion: false,
+};
 
 let testDir: string;
 

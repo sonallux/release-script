@@ -5,9 +5,15 @@ import semverParse from 'semver/functions/parse';
 
 import {WriteFile} from '../../src/version-hooks';
 import {createTestDirectory} from '../test-git-repo';
+import {ReleaseContext} from '../../src/types';
 
-// eslint-disable-next-line
-const context: any = {};
+const context: ReleaseContext = {
+    version: undefined,
+    directory: undefined,
+    config: undefined,
+    git: undefined,
+    isNextDevelopmentVersion: false,
+};
 
 let testDir: string;
 

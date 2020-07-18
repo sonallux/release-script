@@ -13,7 +13,7 @@ export function GitBranch(branchName: RegExp | string): PreconditionFunction {
         else if (branchName.test(currentBranch)) {
             return;
         }
-        throw new Error(`Current branch "${currentBranch}" does not match pattern "${branchName}"!`);
+        throw new Error(`Current branch "${currentBranch}" does not match pattern "${branchName.toString()}"!`);
     }
 
     return precondition;

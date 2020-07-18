@@ -16,7 +16,7 @@ export function Command(
             return;
         }
         catch (err) {
-            throw new Error(`Failed to execute Command plugin: ${err.message}`);
+            throw new Error(`Failed to execute Command plugin: ${err as string}`);
         }
     }
 

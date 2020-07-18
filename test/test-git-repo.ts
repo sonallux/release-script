@@ -2,9 +2,12 @@ import {existsSync, readdirSync, mkdirSync} from 'fs';
 import path from 'path';
 
 import rimraf from 'rimraf';
+import {SemVer} from 'semver';
 import simplegit from 'simple-git/promise';
 
 import {GitImpl} from '../src/git';
+import {ReleaseContext} from '../src/types';
+import {ReleaseContextImpl} from '../src/release-context';
 
 const DEFAULT_REPO_FOLDER = './test-temp';
 
@@ -37,6 +40,10 @@ export class TestGitRepo {
         await simpleGit.addConfig('user.email', 'test@test.com');
         const gitImpl = new GitImpl(simpleGit);
         return new TestGitRepo(directory, gitImpl);
+    }
+
+    context(version = new SemVer('1.0.0'), config = {}, isNextDevVersion = false): ReleaseContext {
+        return new ReleaseContextImpl(this._directory, version, config, this._git, isNextDevVersion);
     }
 
     get git(): GitImpl {

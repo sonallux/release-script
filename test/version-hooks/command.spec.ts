@@ -1,7 +1,13 @@
 import {Command} from '../../src/version-hooks';
+import {ReleaseContext} from '../../src/types';
 
-// eslint-disable-next-line
-const context: any = {};
+const context: ReleaseContext = {
+    version: undefined,
+    directory: undefined,
+    config: undefined,
+    git: undefined,
+    isNextDevelopmentVersion: false,
+};
 
 describe('Plugin command executes', () => {
     it('with string', () => {
@@ -19,12 +25,12 @@ describe('Plugin command failes', () => {
     it('with string', () => {
         const command = Command('exit 1');
         return expect(command(context))
-            .rejects.toHaveProperty('message', 'Failed to execute Command plugin: Command failed: exit 1\n');
+            .rejects.toHaveProperty('message', 'Failed to execute Command plugin: Error: Command failed: exit 1\n');
     });
 
     it('with function', () => {
         const command = Command(() => 'exit 1');
         return expect(command(context))
-            .rejects.toHaveProperty('message', 'Failed to execute Command plugin: Command failed: exit 1\n');
+            .rejects.toHaveProperty('message', 'Failed to execute Command plugin: Error: Command failed: exit 1\n');
     });
 });

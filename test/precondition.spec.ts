@@ -38,7 +38,7 @@ async function executeReleaseScriptFailure(preconditions: PreconditionFunction[]
     }
     catch (error) {
         expect((await repo.git.tags()).length).toBe(0);
-        return error;
+        return error as Error;
     }
     throw new Error('Release Script should have thrown error');
 }
