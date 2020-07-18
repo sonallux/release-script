@@ -3,12 +3,12 @@ import {promisify} from 'util';
 
 import type {ReleaseContext, VersionFunction, ReleaseFunction} from '../types';
 
+const exec = promisify(execCallback);
+
 export function Command(
     cmdString: string | ((context: ReleaseContext) => string),
     options?: ExecOptions,
 ): VersionFunction|ReleaseFunction {
-    const exec = promisify(execCallback);
-
     async function pluginFunction(context: ReleaseContext): Promise<void> {
         const command = typeof cmdString === 'string' ? cmdString : cmdString(context);
         try {

@@ -6,7 +6,7 @@ import SemVer from 'semver/classes/semver';
 import simplegit from 'simple-git/promise';
 
 import {GitImpl} from '../src/git';
-import {ReleaseContext, Git} from '../src/types';
+import type {ReleaseContext, Git} from '../src/types';
 import {ReleaseContextImpl} from '../src/release-context';
 
 const DEFAULT_REPO_FOLDER = './test-temp';

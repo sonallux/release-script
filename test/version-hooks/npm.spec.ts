@@ -6,7 +6,7 @@ import SemVer from 'semver/classes/semver';
 
 import {NpmPackage} from '../../src/version-hooks';
 import {createTestDirectory, createReleaseContext} from '../test-utils';
-import {ReleaseContext} from '../../src/types';
+import type {ReleaseContext} from '../../src/types';
 
 let context: ReleaseContext;
 let testDir: string;

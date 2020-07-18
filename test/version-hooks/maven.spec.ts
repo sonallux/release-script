@@ -5,7 +5,7 @@ import SemVer from 'semver/classes/semver';
 
 import {MavenPom} from '../../src/version-hooks';
 import {createReleaseContext} from '../test-utils';
-import {ReleaseContext} from '../../src/types';
+import type {ReleaseContext} from '../../src/types';
 
 let testDir: string;
 let context: ReleaseContext;
