@@ -4,6 +4,9 @@ import path from 'path';
 
 import type {ReleaseContext, VersionFunction} from '../types';
 
+const writeFile = promisify(writeFileCallback);
+const readFile = promisify(readFileCallback);
+
 function defaultReleaseHeader(context: ReleaseContext): Promise<string> {
     return Promise.resolve(`## [${context.version.version}]`);
 }
@@ -13,9 +16,6 @@ export function Changelog(
     releaseHeader = defaultReleaseHeader,
     fileEncoding = 'utf-8',
 ): VersionFunction {
-    const writeFile = promisify(writeFileCallback);
-    const readFile = promisify(readFileCallback);
-
     async function pluginFunction(context: ReleaseContext): Promise<void> {
         if (!context.isNextDevelopmentVersion) {
             const fullFilePath = path.resolve(context.directory, file);

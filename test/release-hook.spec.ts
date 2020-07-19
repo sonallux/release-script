@@ -4,7 +4,7 @@ import path from 'path';
 import {release} from '../src/release-script';
 import type {ReleaseContext, ReleaseFunction} from '../src/types';
 
-import {TestGitRepo} from './test-git-repo';
+import {TestGitRepo} from './test-utils';
 
 let repo: TestGitRepo;
 
@@ -30,7 +30,7 @@ async function executeReleaseScriptFailure(releaseHook: ReleaseFunction[], newVe
     }
     catch (error) {
         expect(await repo.git.tags()).toContain(`v${newVersion}`);
-        return error;
+        return error as Error;
     }
     throw new Error('Release Script should have thrown error');
 }

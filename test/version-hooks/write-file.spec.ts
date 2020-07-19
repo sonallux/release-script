@@ -1,20 +1,18 @@
 import {readFileSync} from 'fs';
 import path from 'path';
 
-import semverParse from 'semver/functions/parse';
+import SemVer from 'semver/classes/semver';
 
 import {WriteFile} from '../../src/version-hooks';
-import {createTestDirectory} from '../test-git-repo';
+import {createTestDirectory, createReleaseContext} from '../test-utils';
+import type {ReleaseContext} from '../../src/types';
 
-// eslint-disable-next-line
-const context: any = {};
-
+let context: ReleaseContext;
 let testDir: string;
 
 beforeEach(() => {
     testDir = createTestDirectory('TestPluginWriteFile');
-    context.directory = testDir;
-    context.version = semverParse('1.0.0');
+    context = createReleaseContext(testDir, new SemVer('1.0.0'));
 });
 
 describe('Plugin WriteFile', () => {

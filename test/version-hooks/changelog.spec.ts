@@ -1,19 +1,19 @@
 import {writeFileSync, readFileSync} from 'fs';
 import path from 'path';
 
-import semverParse from 'semver/functions/parse';
+import SemVer from 'semver/classes/semver';
 
 import {Changelog} from '../../src/version-hooks';
-import {createTestDirectory} from '../test-git-repo';
+import {createTestDirectory, createReleaseContext} from '../test-utils';
+import type {ReleaseContext} from '../../src/types';
 
-// eslint-disable-next-line
-const context: any = {};
 
+let context: ReleaseContext;
 let testChangelogFile: string;
 
 beforeEach(() => {
     const testDir = createTestDirectory('TestPluginChangelog');
-    context.directory = testDir;
+    context = createReleaseContext(testDir);
     testChangelogFile = path.resolve(testDir, 'CHANGELOG.md');
 });
 
@@ -39,7 +39,7 @@ describe('Version Hook Changelog', () => {
 
         const plugin = Changelog('CHANGELOG.md');
         context.isNextDevelopmentVersion = false;
-        context.version = semverParse('1.1.0');
+        context.version = new SemVer('1.1.0');
 
         await plugin(context);
 
@@ -52,7 +52,7 @@ describe('Version Hook Changelog', () => {
 
         const plugin = Changelog('CHANGELOG.md', () => Promise.resolve('## Foo Bar Header'));
         context.isNextDevelopmentVersion = false;
-        context.version = semverParse('1.1.0');
+        context.version = new SemVer('1.1.0');
 
         await plugin(context);
 

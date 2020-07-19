@@ -29,6 +29,7 @@ module.exports =  {
         "no-new": "error",
         "no-new-object": "error",
         "no-new-wrappers": "error",
+        "no-restricted-imports": ["error", "semver"],
         "no-shadow": "error",
         "no-tabs": "error",
         "no-useless-rename": "error",
@@ -47,7 +48,6 @@ module.exports =  {
             parser: "@typescript-eslint/parser",
             extends:  [
                 "plugin:import/typescript",
-                "plugin:@typescript-eslint/eslint-recommended",
                 "plugin:@typescript-eslint/recommended",
                 "plugin:@typescript-eslint/recommended-requiring-type-checking"
             ],
@@ -60,20 +60,6 @@ module.exports =  {
 
             },
         },{
-            files: ["**/*.js"],
-            env: {node: true, es2017: true},
-            extends:  [
-                "plugin:node/recommended",
-            ],
-            parserOptions:  {
-                ecmaVersion:  2017,  // Allows for the parsing of modern ECMAScript features
-                sourceType:  "script",  // Allows for the use of imports
-            },
-            rules: {
-
-            },
-        },
-        {
             files: ["**/*.json"],
             env: {node: true, es2017: true},
             extends:  [
