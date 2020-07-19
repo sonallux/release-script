@@ -4,7 +4,7 @@ import path from 'path';
 import {release} from '../src/release-script';
 import type {ReleaseConfigOptions} from '../src/types';
 
-import {TestGitRepo} from './test-git-repo';
+import {TestGitRepo} from './test-utils';
 
 let repo: TestGitRepo;
 
@@ -35,7 +35,8 @@ describe('ReleaseScript', () => {
             expect(true).toBeFalsy();
         }
         catch(err) {
-            expect(err.message).toContain('New version does not follow the semantic version specification');
+            const error = err as Error;
+            expect(error.message).toContain('New version does not follow the semantic version specification');
         }
 
         expect((await repo.git.tags()).length).toBe(0);
@@ -50,7 +51,8 @@ describe('ReleaseScript', () => {
             expect(true).toBeFalsy();
         }
         catch(err) {
-            expect(err.message).toContain('Invalid configuration object.');
+            const error = err as Error;
+            expect(error.message).toContain('Invalid configuration object.');
         }
 
         expect((await repo.git.tags()).length).toBe(0);

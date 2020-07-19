@@ -2,19 +2,18 @@ import {execSync} from 'child_process';
 import {readFileSync} from 'fs';
 import path from 'path';
 
-import semverParse from 'semver/functions/parse';
+import SemVer from 'semver/classes/semver';
 
 import {NpmPackage} from '../../src/version-hooks';
-import {createTestDirectory} from '../test-git-repo';
+import {createTestDirectory, createReleaseContext} from '../test-utils';
+import type {ReleaseContext} from '../../src/types';
 
-// eslint-disable-next-line
-const context: any = {};
-
+let context: ReleaseContext;
 let testDir: string;
 
 beforeEach(() => {
     testDir = createTestDirectory('TestPluginNpmPackage');
-    context.directory = testDir;
+    context = createReleaseContext(testDir);
 });
 
 describe('Plugin NpmPackage', () => {
@@ -22,11 +21,12 @@ describe('Plugin NpmPackage', () => {
         execSync('npm init -y', {cwd: testDir});
 
         const plugin = NpmPackage();
-        context.version = semverParse('1.0.1');
+        context.version = new SemVer('1.0.1');
         await plugin(context);
 
-        const packageJson = JSON.parse(readFileSync(path.resolve(testDir, 'package.json')).toString('utf-8'));
-        expect(packageJson.version).toEqual('1.0.1');
+        //eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const {version} = JSON.parse(readFileSync(path.resolve(testDir, 'package.json')).toString('utf-8'));
+        expect(version).toEqual('1.0.1');
 
         return null;
     });
@@ -35,11 +35,12 @@ describe('Plugin NpmPackage', () => {
         execSync('npm init -y', {cwd: testDir});
 
         const plugin = NpmPackage();
-        context.version = semverParse('1.0.0');
+        context.version = new SemVer('1.0.0');
         await plugin(context);
 
-        const packageJson = JSON.parse(readFileSync(path.resolve(testDir, 'package.json')).toString('utf-8'));
-        expect(packageJson.version).toEqual('1.0.0');
+        //eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const {version} = JSON.parse(readFileSync(path.resolve(testDir, 'package.json')).toString('utf-8'));
+        expect(version).toEqual('1.0.0');
 
         return null;
     });

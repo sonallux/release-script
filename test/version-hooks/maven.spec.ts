@@ -1,14 +1,14 @@
 import {readFileSync, writeFileSync} from 'fs';
 import path from 'path';
 
-import semverParse from 'semver/functions/parse';
+import SemVer from 'semver/classes/semver';
 
 import {MavenPom} from '../../src/version-hooks';
-
-// eslint-disable-next-line
-const context: any = {};
+import {createReleaseContext} from '../test-utils';
+import type {ReleaseContext} from '../../src/types';
 
 let testDir: string;
+let context: ReleaseContext;
 
 function getPom(version: string): string {
     return `<project xmlns="http://maven.apache.org/POM/4.0.0" 
@@ -24,14 +24,13 @@ function getPom(version: string): string {
 
 beforeEach(() => {
     testDir = path.resolve('./test-maven');
-    context.directory = testDir;
+    context = createReleaseContext(testDir, new SemVer('1.1.0'));
     writeFileSync(path.resolve(testDir, 'pom.xml'), getPom('1.0.0'), 'utf-8');
 });
 
 describe('Plugin MavenPom', () => {
     it('updates version number', async () => {
         const plugin = MavenPom();
-        context.version = semverParse('1.1.0');
         await plugin(context);
 
         const actualPom = readFileSync(path.resolve(testDir, 'pom.xml')).toString('utf-8');

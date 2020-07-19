@@ -62,6 +62,7 @@ function getReleaseConfig(userReleaseConfigFile?: string): ReleaseConfigOptions 
             throw new Error(`No ${userReleaseConfigFile} found!`);
         }
     }
+    //eslint-disable-next-line @typescript-eslint/no-var-requires
     return require(configFile) as ReleaseConfigOptions;
 }
 

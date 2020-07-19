@@ -24,7 +24,7 @@ export async function release(
     const newVersion = semverParse(newVersionString);
     if (newVersion === null) {
         return Promise.reject(
-            new Error(`New version does not follow the semantic version specification: ${newVersion}`));
+            new Error(`New version does not follow the semantic version specification: ${newVersionString}`));
     }
 
     const currentDirectory = path.resolve(directory);
@@ -33,7 +33,7 @@ export async function release(
 
     await checkPreconditions(context);
     await executeVersionHooks(context);
-    await context.doGitCommit(`Release version ${context.version} [CI SKIP]`);
+    await context.doGitCommit(`Release version ${context.version.version} [CI SKIP]`);
     await context.doGitTag();
     await executeReleaseHooks(context);
 
