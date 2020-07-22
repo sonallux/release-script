@@ -58,7 +58,9 @@
     "prebuild": "rimraf dist",
     "build": "rollup -c && shx cp src/types.d.ts dist/release-script.d.ts",
     "watch": "rollup -c --watch",
-    "test": "jest --coverage --maxWorkers=2"
+    "test": "jest --coverage --maxWorkers=2",
+    "prerelease": "npm run build",
+    "release": "node dist/release-script-cli.js"
   },
   "files": [
     "dist/"
