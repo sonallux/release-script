@@ -60,7 +60,7 @@
     "watch": "rollup -c --watch",
     "test": "jest --coverage --maxWorkers=2",
     "prerelease": "npm run build",
-    "release": "node dist/release-script-cli.js"
+    "release": "node dist/release-script-cli.js -c release-script.config.js"
   },
   "files": [
     "dist/"
