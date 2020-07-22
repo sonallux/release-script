@@ -10,7 +10,8 @@ Release script automates your release process for projects using git. Typically,
 1. Update the version number and do a `git commit`
 2. Do a `git tag`
 3. Update the version number to the next development version and do a `git commit`
-4. Do a `git push`
+4. Push the new version to your package manager
+5. Do a `git push`
 
 Release Script will execute all these steps and can be customized to your needs with preconditions, version update hook and release hook.
 
