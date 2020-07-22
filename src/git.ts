@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/default
 import simplegit, {SimpleGit, DefaultLogFields, StatusResult} from 'simple-git';
 
 import type {Git} from './types';
@@ -78,8 +77,9 @@ export class GitImpl implements Git {
         return log.latest;
     }
 
-    push(): Promise<void> {
-        return this.git.push(undefined, undefined, {'--follow-tags': null});
+    async push(): Promise<void> {
+        await this.git.push(undefined, undefined, {'--follow-tags': null});
+        return;
     }
 
     get simpleGit(): SimpleGit {

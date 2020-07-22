@@ -3,7 +3,7 @@ import path from 'path';
 
 import rimraf from 'rimraf';
 import SemVer from 'semver/classes/semver';
-import simplegit from 'simple-git/promise';
+import simplegit from 'simple-git';
 
 import {GitImpl} from '../src/git';
 import type {ReleaseContext, Git} from '../src/types';
