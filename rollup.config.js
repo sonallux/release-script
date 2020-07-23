@@ -2,8 +2,9 @@ import commonjs from '@rollup/plugin-commonjs';
 import multiEntry from '@rollup/plugin-multi-entry';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
+import nodeBuiltins from 'builtin-modules';
+import {terser} from 'rollup-plugin-terser';
 
-const nodeExternals = ['buffer', 'child_process', 'fs', 'os', 'path', 'tty', 'util'];
 const myExternals = [
     'command-line-args',
     'command-line-usage',
@@ -20,7 +21,7 @@ export default [
             file: 'dist/release-script.js',
             format: 'cjs',
         },
-        external: [...nodeExternals, ...myExternals],
+        external: [...nodeBuiltins, ...myExternals],
         plugins: [typescript(), multiEntry()],
     },
     {
@@ -31,7 +32,7 @@ export default [
             banner: '#!/usr/bin/env node',
             footer: 'cli();',
         },
-        external: [...nodeExternals, ...myExternals],
+        external: [...nodeBuiltins, ...myExternals],
         plugins: [typescript()],
     },
     {
@@ -40,12 +41,13 @@ export default [
             file: 'dist/release-script-standalone.js',
             format: 'cjs',
         },
-        external: [...nodeExternals],
+        external: [...nodeBuiltins],
         plugins: [
             nodeResolve(),
             commonjs({include: 'node_modules/**'}),
             typescript(),
             multiEntry(),
+            terser(),
         ],
     }
 ];
