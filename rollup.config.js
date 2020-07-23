@@ -47,7 +47,7 @@ export default [
             commonjs({include: 'node_modules/**'}),
             typescript(),
             multiEntry(),
-            terser(),
+            terser({output: {comments: false}}),
         ],
     }
 ];
