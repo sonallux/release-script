@@ -1,19 +1,44 @@
-name: Publish to GitHub Packages
+name: Publish
 on:
   push:
     tags: v*
 jobs:
-  publish:
+  npm-publish:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    # Setup .npmrc file to publish to GitHub Packages
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '12.x'
-        registry-url: 'https://npm.pkg.github.com'
-    - run: npm install
-    - run: npm run build
-    - run: npm publish
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+          registry-url: 'https://npm.pkg.github.com'
+      - run: npm install
+      - run: npm run build
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  github-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/github-script@v1
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const path = require('path')
+            const extractChanges = require(path.resolve("./.github/workflows/extract-changes.js"));
+            const tagName = context.ref.substring(11);
+            console.log(`Creating release for tag ${tagName}`);
+
+            const changes = extractChanges(tagName);
+            if (changes === null) {
+              console.log("No changes found in CHANGELOG.md");
+              return;
+            }
+            github.repos.createRelease({
+              ...context.repo,
+              tag_name: `v${tagName}`,
+              name: tagName,
+              body: changes,
+            });
+    
+
