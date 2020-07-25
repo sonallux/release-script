@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - Minify `release-script-standalone.js` file
+- Add GitHub workflow to create GitHub release
 
 ## [1.0.0-dev.7]
 - Add CHANGELOG.md file
