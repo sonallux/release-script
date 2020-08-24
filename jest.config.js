@@ -5,5 +5,5 @@ module.exports = {
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
     testTimeout: 10000,
     collectCoverageFrom: ['src/**/*.ts'],
-    setupFilesAfterEnv: ['test/jest.setup.js'],
+    setupFilesAfterEnv: ['<rootDir>/test/jest.setup.js'],
 };
