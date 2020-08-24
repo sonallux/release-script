@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import type {ReleaseConfigOptions} from './types';
 
 function isArrayOfFunctions(functions: any): boolean {
@@ -22,7 +24,7 @@ export class ConfigValidator {
 
     private errors: string[] = [];
 
-    validate(releaseConfig: ReleaseConfigOptions): releaseConfig is ReleaseConfigOptions {
+    validate(releaseConfig: any): releaseConfig is ReleaseConfigOptions {
         this.errors = [];
         if ('preconditions' in releaseConfig && !isArrayOfFunctions(releaseConfig.preconditions)) {
             this.errors.push('config.preconditions must be an array of PreconditionFunctions');
