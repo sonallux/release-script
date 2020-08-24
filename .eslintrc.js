@@ -60,6 +60,9 @@ module.exports =  {
 
             },
         },{
+            files: ["test/**/*"],
+            env: {node: true, es2017: true, jest: true}
+        },{
             files: ["**/*.json"],
             env: {node: true, es2017: true},
             extends:  [
