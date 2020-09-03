@@ -9,14 +9,12 @@ beforeAll(() => {
     validator = new ConfigValidator();
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function expectValidConfig(config: any): void {
+function expectValidConfig(config: unknown): void {
     expect(validator.validate(config)).toBeTruthy();
     expect(validator.getErrors().length).toBe(0);
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function expectInValidConfig(config: any): string[] {
+function expectInValidConfig(config: unknown): string[] {
     expect(validator.validate(config)).toBeFalsy();
     const errors = validator.getErrors();
     expect(errors.length).toBeGreaterThan(0);
@@ -26,6 +24,21 @@ function expectInValidConfig(config: any): string[] {
 describe('validateConfig', () => {
     it('should pass for empty config', () => {
         expectValidConfig({});
+    });
+
+    it('should fail for non config object', () => {
+        expect(expectInValidConfig(undefined))
+            .toEqual(['config must be an object']);
+        expect(expectInValidConfig(null))
+            .toEqual(['config must be an object']);
+        expect(expectInValidConfig(42))
+            .toEqual(['config must be an object']);
+        expect(expectInValidConfig(false))
+            .toEqual(['config must be an object']);
+        expect(expectInValidConfig(true))
+            .toEqual(['config must be an object']);
+        expect(expectInValidConfig('foo'))
+            .toEqual(['config must be an object']);
     });
 
     it('should check preconditions', () => {
