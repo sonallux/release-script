@@ -52,12 +52,12 @@ module.exports =  {
                 "plugin:@typescript-eslint/recommended-requiring-type-checking"
             ],
             parserOptions:  {
-                ecmaVersion:  2017,  // Allows for the parsing of modern ECMAScript features
                 sourceType:  "module",  // Allows for the use of imports
                 project: "./tsconfig-eslint.json"
             },
             rules: {
-
+                "@typescript-eslint/prefer-nullish-coalescing": "warn",
+                "@typescript-eslint/prefer-optional-chain": "warn"
             },
         },{
             files: ["test/**/*"],

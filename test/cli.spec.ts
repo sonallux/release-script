@@ -20,6 +20,31 @@ afterEach(() => {
 });
 
 describe('CLI', () => {
+    it('should print help section', () => {
+        const releaseMock = jest.spyOn(releaseModule, 'release').mockReturnValue(Promise.resolve());
+        const consoleLogMock = jest.spyOn(console, 'log');
+
+        process.argv = ['node', 'release', '--help'];
+
+        cli();
+
+        expect(consoleLogMock).toBeCalledTimes(1);
+        expect(releaseMock).not.toBeCalled();
+    });
+
+    it('should print version number', () => {
+        const releaseMock = jest.spyOn(releaseModule, 'release').mockReturnValue(Promise.resolve());
+        const consoleLogMock = jest.spyOn(console, 'log');
+
+        process.argv = ['node', 'release', '--version'];
+
+        cli();
+
+        expect(consoleLogMock).toBeCalledTimes(1);
+        expect(consoleLogMock.mock.calls[0][0]).toEqual('Current version unknown');
+        expect(releaseMock).not.toBeCalled();
+    });
+
     it('should use passed configuration', () => {
         const releaseMock = jest.spyOn(releaseModule, 'release').mockReturnValue(Promise.resolve());
         process.argv = ['node', 'release', '1.0.0'];
