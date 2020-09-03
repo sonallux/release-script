@@ -76,11 +76,7 @@ export function cli(config?: ReleaseConfigOptions): void {
         console.log('Current version unknown');
     }
     else {
-        if (config === undefined) {
-            config = getReleaseConfig(options.config);
-        }
-
-        release(options.release, config)
+        release(options.release, config ?? getReleaseConfig(options.config))
             .catch(error => console.log(error));
     }
 }

@@ -30,12 +30,7 @@ export class GitImpl implements Git {
     }
 
     async add(files?: string|string[]): Promise<void> {
-        if (files) {
-            await this.git.add(files);
-        } 
-        else {
-            await this.git.add('.');
-        }
+        await this.git.add(files ?? '.');
         return;
     }
 
