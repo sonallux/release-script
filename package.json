@@ -34,7 +34,7 @@
     "@rollup/plugin-commonjs": "15.0.0",
     "@rollup/plugin-multi-entry": "4.0.0",
     "@rollup/plugin-node-resolve": "9.0.0",
-    "@rollup/plugin-typescript": "5.0.2",
+    "@rollup/plugin-typescript": "6.0.0",
     "@types/command-line-args": "5.0.0",
     "@types/command-line-usage": "5.0.1",
     "@types/jest": "26.0.13",
