@@ -8,15 +8,32 @@ import {NpmPackage} from '../../src/version-hooks';
 import {createTestDirectory, createReleaseContext} from '../test-utils';
 import type {ReleaseContext} from '../../src/types';
 
-let context: ReleaseContext;
-let testDir: string;
-
-beforeEach(() => {
-    testDir = createTestDirectory('TestPluginNpmPackage');
-    context = createReleaseContext(testDir);
-});
+import {mockCommand} from './command.mock';
 
 describe('Plugin NpmPackage', () => {
+    let context: ReleaseContext;
+    let testDir: string;
+
+    beforeEach(() => {
+        testDir = createTestDirectory('TestPluginNpmPackage');
+        context = createReleaseContext(testDir);
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
+    it('creates correct npm command', async () => {
+        const mock = mockCommand();
+       
+        const plugin = NpmPackage();
+        context.version = new SemVer('1.1.0');
+        await plugin(context);
+
+        const expectedCmd = 'npm --no-git-tag-version --allow-same-version version 1.1.0';
+        expect(mock).toBeCalledWith(expectedCmd, undefined);
+    });
+
     it('updates version number', async () => {
         execSync('npm init -y', {cwd: testDir});
 
