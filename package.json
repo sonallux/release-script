@@ -1,20 +1,20 @@
 {
-  "name": "@jsone-studios/release-script",
+  "name": "@sonallux/release-script",
   "version": "1.0.0-dev.8",
   "description": "Release script automates your release process for projects using git.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jsone-studios/release-script.git"
+    "url": "https://github.com/sonallux/release-script.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
-  "author": "jsone-studios",
+  "author": "sonallux",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jsone-studios/release-script/issues"
+    "url": "https://github.com/sonallux/release-script/issues"
   },
-  "homepage": "https://github.com/jsone-studios/release-script#readme",
+  "homepage": "https://github.com/sonallux/release-script#readme",
   "main": "dist/release-script.js",
   "typings": "dist/release-script.d.ts",
   "bin": {

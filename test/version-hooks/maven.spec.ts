@@ -15,7 +15,7 @@ function getPom(version: string): string {
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     
-    <groupId>de.jsone-studios.release-script</groupId>
+    <groupId>de.sonallux.release-script</groupId>
     <artifactId>release-script</artifactId>
     <version>${version}</version>
     </project>`;

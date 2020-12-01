@@ -1,9 +1,9 @@
 # Release script
 
-[![Build](https://github.com/jsone-studios/release-script/workflows/Build/badge.svg)](https://github.com/jsone-studios/release-script/actions?query=workflow%3ABuild)
-[![codecov](https://codecov.io/gh/jsone-studios/release-script/branch/master/graph/badge.svg)](https://codecov.io/gh/jsone-studios/release-script)
-[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/jsone-studios/release-script?sort=semver)](https://github.com/jsone-studios/release-script/releases)
-[![GitHub](https://img.shields.io/github/license/jsone-studios/release-script)](https://github.com/jsone-studios/release-script/blob/master/LICENSE)
+[![Build](https://github.com/sonallux/release-script/workflows/Build/badge.svg)](https://github.com/sonallux/release-script/actions?query=workflow%3ABuild)
+[![codecov](https://codecov.io/gh/sonallux/release-script/branch/master/graph/badge.svg)](https://codecov.io/gh/sonallux/release-script)
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/sonallux/release-script?sort=semver)](https://github.com/sonallux/release-script/releases)
+[![GitHub](https://img.shields.io/github/license/sonallux/release-script)](https://github.com/sonallux/release-script/blob/master/LICENSE)
 
 Release script automates your release process for projects using git. Typically, releases involve a fixed number of steps to be executed in a given order. Most often these steps are always present:
 1. Update the version number and do a `git commit`
@@ -58,4 +58,4 @@ The `ReleaseContext` holds any information relevant to the current release. The 
 
 ## License
 
-[MIT](https://github.com/jsone-studios/release-script/blob/master/LICENSE)
+[MIT](https://github.com/sonallux/release-script/blob/master/LICENSE)
