@@ -33,7 +33,7 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "17.0.0",
     "@rollup/plugin-multi-entry": "4.0.0",
-    "@rollup/plugin-node-resolve": "11.0.0",
+    "@rollup/plugin-node-resolve": "11.0.1",
     "@rollup/plugin-typescript": "8.0.0",
     "@types/command-line-args": "5.0.0",
     "@types/command-line-usage": "5.0.1",
