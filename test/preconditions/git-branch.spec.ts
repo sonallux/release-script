@@ -14,7 +14,7 @@ beforeEach(async () => {
 
 describe('GitBranch with string', () => {
     it('should work on correct branch', () => {
-        const precondition = GitBranch('master');
+        const precondition = GitBranch('main');
         return expect(precondition(repo.context())).resolves.toBe(undefined);
     });
 
@@ -22,7 +22,7 @@ describe('GitBranch with string', () => {
         const precondition = GitBranch('test');
 
         return expect(precondition(repo.context()))
-            .rejects.toHaveProperty('message', 'Expected branch "test" but got "master"!');
+            .rejects.toHaveProperty('message', 'Expected branch "test" but got "main"!');
     });
 });
 
@@ -39,6 +39,6 @@ describe('GitBranch with RegExp', () => {
 
         return expect(precondition(repo.context()))
             .rejects
-            .toHaveProperty('message', 'Current branch "master" does not match pattern "/^v[0-9]+\\.[0-9]+$/"!');
+            .toHaveProperty('message', 'Current branch "main" does not match pattern "/^v[0-9]+\\.[0-9]+$/"!');
     });
 });

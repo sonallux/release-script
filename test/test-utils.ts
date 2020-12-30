@@ -36,6 +36,10 @@ export class TestGitRepo {
         const directory = createTestDirectory(name);
         const simpleGit = simplegit(directory);
         await simpleGit.init();
+        // Newer git installation might use 'main' as default branch name, 
+        // therefore we hardcode 'main' as our default branch name
+        // Also see https://stackoverflow.com/a/42871621/4508716
+        await simpleGit.checkout(['-b', 'main']);
         await simpleGit.addConfig('user.name', 'Test Executor');
         await simpleGit.addConfig('user.email', 'test@test.com');
         const gitImpl = new GitImpl(simpleGit);

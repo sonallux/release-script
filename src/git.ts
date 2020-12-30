@@ -69,7 +69,7 @@ export class GitImpl implements Git {
 
     async getLatestCommit(): Promise<DefaultLogFields> {
         const log = await this.git.log({'--max-count': 1});
-        return log.latest;
+        return log.all[0];
     }
 
     async push(): Promise<void> {
