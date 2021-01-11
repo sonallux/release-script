@@ -37,7 +37,7 @@
     "@rollup/plugin-typescript": "8.1.0",
     "@types/command-line-args": "5.0.0",
     "@types/command-line-usage": "5.0.1",
-    "@types/jest": "26.0.17",
+    "@types/jest": "26.0.20",
     "@types/node": "12.19.8",
     "@types/rimraf": "3.0.0",
     "@typescript-eslint/eslint-plugin": "4.11.1",
