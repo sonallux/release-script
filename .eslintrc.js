@@ -1,7 +1,7 @@
 module.exports =  {
     env: {node: true, es2017: true},
     parserOptions:  {
-        ecmaVersion:  2017,  // Allows for the parsing of modern ECMAScript features
+        ecmaVersion:  2019,  // Allows for the parsing of modern ECMAScript features
         sourceType:  "script",  // Allows for the use of imports
     },
     plugins: ["import"],

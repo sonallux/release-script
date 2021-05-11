@@ -1,7 +1,7 @@
-const readFileSync = require('fs').readFileSync;
+const {readFileSync, writeFileSync} = require('fs');
 const path = require('path');
 
-function extractChanges(version) {
+function extractChanges(version, outputFile) {
   const changelogFile = path.resolve("CHANGELOG.md");
   const changelog = readFileSync(changelogFile, 'utf-8');
   const lines = changelog.split('\n');
@@ -12,17 +12,17 @@ function extractChanges(version) {
       break;
     }
   }
-  if (i === lines.length) {
-    return null;
-  }
-  i++;
-  for (; i < lines.length; i++) {
-    if (lines[i].startsWith('##')) {
-      break;
+  if (i !== lines.length) {
+    i++;
+    for (; i < lines.length; i++) {
+      if (lines[i].startsWith('##')) {
+        break;
+      }
+      currentChanges.push(lines[i]);
     }
-    currentChanges.push(lines[i]);
   }
-  return currentChanges.join('\n');
+  var extractedChangelog = currentChanges.join('\n');
+  writeFileSync(path.resolve(outputFile), extractedChangelog, 'utf-8');
 }
 
 module.exports = extractChanges;

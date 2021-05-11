@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+import {existsSync} from 'fs';
+import {resolve} from 'path';
 
 import commandLineArgs from 'command-line-args';
 import commandLineUsage from 'command-line-usage';
@@ -51,14 +51,14 @@ const helpSections: commandLineUsage.Section[] = [
 function getReleaseConfig(userReleaseConfigFile?: string): ReleaseConfigOptions | undefined {
     let configFile: string;
     if (userReleaseConfigFile === undefined ) {
-        configFile = path.resolve(DEFAULT_RELEASE_CONFIG_FILE);
-        if (!fs.existsSync(DEFAULT_RELEASE_CONFIG_FILE)) {
+        configFile = resolve(DEFAULT_RELEASE_CONFIG_FILE);
+        if (!existsSync(DEFAULT_RELEASE_CONFIG_FILE)) {
             return;
         }
     }
     else {
-        configFile = path.resolve(userReleaseConfigFile);
-        if (!fs.existsSync(configFile)) {
+        configFile = resolve(userReleaseConfigFile);
+        if (!existsSync(configFile)) {
             throw new Error(`No ${userReleaseConfigFile} found!`);
         }
     }

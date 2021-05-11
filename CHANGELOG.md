@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - Use local maven installation if maven wrapper is not present
+- Require at least Node 12
 
 ## [1.0.0-dev.8]
 - Minify `release-script-standalone.js` file

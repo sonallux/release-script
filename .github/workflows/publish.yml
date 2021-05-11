@@ -1,26 +1,30 @@
 name: Publish
+
 on:
   push:
     tags: v*
+
 jobs:
   npm-publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup nodejs
+        uses: actions/setup-node@v1
         with:
           node-version: '12'
           registry-url: 'https://npm.pkg.github.com'
-      - run: npm install
-      - run: npm run build
-      - run: npm publish
+      - name: Install
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Publish
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  github-release:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/github-script@v1
+      - name: Extract changelog
+        uses: actions/github-script@v1
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
@@ -29,16 +33,12 @@ jobs:
             const tagName = context.ref.substring(11);
             console.log(`Creating release for tag ${tagName}`);
 
-            const changes = extractChanges(tagName);
-            if (changes === null) {
-              console.log("No changes found in CHANGELOG.md");
-              return;
-            }
-            github.repos.createRelease({
-              ...context.repo,
-              tag_name: `v${tagName}`,
-              name: tagName,
-              body: changes,
-            });
-    
-
+            extractChanges(tagName, 'current-release-changelog.md');
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          body_path: 'current-release-changelog.md'
+          files: |
+            dist/release-script-standalone.js

@@ -1,6 +1,6 @@
 import {writeFile as writeFileCallback, readFile as readFileCallback} from 'fs';
 import {promisify} from 'util';
-import path from 'path';
+import {resolve} from 'path';
 
 import type {ReleaseContext, VersionFunction} from '../types';
 
@@ -18,7 +18,7 @@ export function Changelog(
 ): VersionFunction {
     async function pluginFunction(context: ReleaseContext): Promise<void> {
         if (!context.isNextDevelopmentVersion) {
-            const fullFilePath = path.resolve(context.directory, file);
+            const fullFilePath = resolve(context.directory, file);
             const oldChangelog = await readFile(fullFilePath, fileEncoding);
             const lines = oldChangelog.split('\n');
             let unreleasedLineIndex = -1;

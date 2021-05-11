@@ -1,4 +1,4 @@
-import path from 'path';
+import {resolve} from 'path';
 
 import semverParse from 'semver/functions/parse';
 
@@ -27,8 +27,8 @@ export async function release(
             new Error(`New version does not follow the semantic version specification: ${newVersionString}`));
     }
 
-    const currentDirectory = path.resolve(directory);
-    const git = openRepo(path.resolve(currentDirectory));
+    const currentDirectory = resolve(directory);
+    const git = openRepo(currentDirectory);
     const context = new ReleaseContextImpl(currentDirectory, newVersion, releaseConfig, git, false);
 
     await checkPreconditions(context);

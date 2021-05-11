@@ -2,8 +2,8 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-		"lib": ["es2017"],
-		"module": "es6",
+		"lib": ["es2019"],
+		"module": "es2015",
     "moduleResolution": "node",
 		"noEmitOnError": true,
 		"noUnusedLocals": true,
@@ -11,7 +11,7 @@
 		"pretty": true,
 		"skipLibCheck": true,
 		"strict": true,
-		"target": "es2016"
+		"target": "es2019"
   },
   "include": [
     "src/**/*"
