@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [1.0.0-dev.10]
+- Bump dependencies
+- Require at least Node 14
 
 ## [1.0.0-dev.9]
 - Use local maven installation if maven wrapper is not present
