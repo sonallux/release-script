@@ -9,8 +9,8 @@ export async function checkPreconditions(context: ReleaseContext): Promise<void>
         try {
             await precondition(context);
         }
-        catch (err) {
-            throw err instanceof Error ? err : new Error(err);
+        catch (err: unknown) {
+            throw err instanceof Error ? err : new Error(String(err));
         }
     }
 }

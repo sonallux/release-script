@@ -9,6 +9,13 @@ import type {ReleaseConfigOptions} from './types';
 
 const DEFAULT_RELEASE_CONFIG_FILE = 'release.config.js';
 
+interface CliOptions {
+    help: boolean
+    version: boolean
+    config?: string
+    release: string
+}
+
 const cliOptionDefinitions: commandLineUsage.OptionDefinition[] = [
     {
         name: 'help',
@@ -67,7 +74,7 @@ function getReleaseConfig(userReleaseConfigFile?: string): ReleaseConfigOptions 
 }
 
 export function cli(config?: ReleaseConfigOptions): void {
-    const options = commandLineArgs(cliOptionDefinitions);
+    const options = commandLineArgs(cliOptionDefinitions) as CliOptions;
 
     if (options.help) {
         console.log(commandLineUsage(helpSections));

@@ -10,7 +10,7 @@ export async function executeVersionHooks(context: ReleaseContext): Promise<void
             await plugin(context);
         }
         catch (err) {
-            throw err instanceof Error ? err : new Error(err);
+            throw err instanceof Error ? err : new Error(String(err));
         }
     }
 }
