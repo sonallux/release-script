@@ -1,6 +1,6 @@
 {
   "name": "@sonallux/release-script",
-  "version": "1.0.0-dev.9",
+  "version": "1.0.0-dev.10",
   "description": "Release script automates your release process for projects using git.",
   "repository": {
     "type": "git",
