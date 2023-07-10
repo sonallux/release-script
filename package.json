@@ -28,7 +28,7 @@
     "simple-git": "3.16.0"
   },
   "engines": {
-    "node": ">=14.17.0"
+    "node": ">=16.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "21.0.3",
